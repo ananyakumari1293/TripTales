@@ -69,28 +69,30 @@ function CreatePost() {
     try {
 
       const response =
-        await axios.post(
-          "https://triptales-1-pb97.onrender.com/api/trips",
-          newTrip
-        );
-
-      console.log(response.data);
-
-      alert(
-        "Trip Published Successfully 🔥"
+       await axios.post(
+        "https://triptales-1-pb97.onrender.com/api/trips",
+         newTrip
       );
 
-      navigate("/explore");
+    console.log(response.data);
+    
+    alert(
+    "Trip Published Successfully 🔥"
+    );
 
-    } catch (error) {
+     navigate("/explore");
 
-      console.log(error);
+    window.location.reload();
 
-      alert(
-        "Failed to publish trip ❌"
-      );
+   } catch (error) {
 
-    }
+    console.log(error);
+
+    alert(
+    "Failed to publish trip ❌"
+  );
+
+}
 
   };
 
