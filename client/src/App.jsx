@@ -40,7 +40,7 @@ function App() {
 
         const response =
           await axios.get(
-            "http://localhost:5000/api/trips"
+            "https://triptales-lb3b.onrender.com/api/trips"
           );
 
         setTrips(response.data);
