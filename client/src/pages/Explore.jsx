@@ -77,7 +77,7 @@ function Explore({ trips = [] }) {
     try {
 
     await axios.delete(
-        `https://triptales-lb3b.onrender.com/api/trips/${id}`
+        `https://triptales-1-pb97.onrender.com/api/trips/${id}`
       );
 
       const updatedTrips =

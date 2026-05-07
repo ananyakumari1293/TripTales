@@ -70,7 +70,7 @@ function CreatePost() {
 
       const response =
         await axios.post(
-          "https://triptales-lb3b.onrender.com/api/trips",
+          "https://triptales-1-pb97.onrender.com/api/trips",
           newTrip
         );
 

@@ -40,7 +40,7 @@ function App() {
 
         const response =
           await axios.get(
-            "https://triptales-lb3b.onrender.com/api/trips"
+            "https://triptales-1-pb97.onrender.com/api/trips"
           );
 
         setTrips(response.data);
