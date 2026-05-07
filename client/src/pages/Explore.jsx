@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import axios from "axios";
 
@@ -25,7 +25,11 @@ function Explore({ trips = [] }) {
     useState("");
 
   const [localTrips, setLocalTrips] =
-    useState(trips);
+    useState([]);
+
+  useEffect(() => {
+    setLocalTrips(trips);
+  }, [trips]);
 
   const filteredTrips = localTrips.filter((trip) => {
 
@@ -76,7 +80,7 @@ function Explore({ trips = [] }) {
 
     try {
 
-    await axios.delete(
+      await axios.delete(
         `https://triptales-1-pb97.onrender.com/api/trips/${id}`
       );
 
