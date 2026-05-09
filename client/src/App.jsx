@@ -26,6 +26,7 @@ import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 
 import About from "./pages/About";
+import Profile from "./pages/Profile";
 
 function App() {
 
@@ -98,6 +99,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
 
         {/* Settings */}
         <Route
@@ -128,6 +130,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+  path="/profile"
+  element={
+    <ProtectedRoute>
+      <Profile trips={trips} />
+    </ProtectedRoute>
+  }
+/>
 
       </Routes>
 

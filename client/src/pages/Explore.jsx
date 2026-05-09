@@ -175,6 +175,17 @@ function Explore({ trips = [] }) {
               </button>
 
               <button
+                onClick={() =>
+                  navigate("/profile")
+                }
+                className="w-full text-left px-6 py-4 hover:bg-purple-100 transition-all duration-200"
+              >
+
+                👤 My Profile
+
+              </button>
+
+              <button
                 onClick={handleLogout}
                 className="w-full text-left px-6 py-4 text-red-500 hover:bg-red-100 transition-all duration-200"
               >
