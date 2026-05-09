@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 import {
@@ -21,11 +22,20 @@ function Login() {
 
   const [password, setPassword] = useState("");
 
-  const [isSignup, setIsSignup] = useState(false);
+  const [isSignup, setIsSignup] =
+    useState(false);
+
+  const [showPassword, setShowPassword] =
+    useState(false);
+
+  const [loading, setLoading] =
+    useState(false);
 
   const handleGoogleLogin = async () => {
 
     try {
+
+      setLoading(true);
 
       await signInWithPopup(
         auth,
@@ -38,13 +48,29 @@ function Login() {
 
       console.log(error);
 
+      alert(error.message);
+
+    } finally {
+
+      setLoading(false);
+
     }
 
   };
 
   const handleAuth = async () => {
 
+    if (!email || !password) {
+
+      alert("Please fill all fields");
+
+      return;
+
+    }
+
     try {
+
+      setLoading(true);
 
       if (isSignup) {
 
@@ -54,12 +80,20 @@ function Login() {
           password
         );
 
+        alert(
+          "Account Created Successfully 🎉"
+        );
+
       } else {
 
         await signInWithEmailAndPassword(
           auth,
           email,
           password
+        );
+
+        alert(
+          "Login Successful 🚀"
         );
 
       }
@@ -72,9 +106,47 @@ function Login() {
 
       alert(error.message);
 
+    } finally {
+
+      setLoading(false);
+
     }
 
   };
+
+  const handleForgotPassword =
+    async () => {
+
+      if (!email) {
+
+        alert(
+          "Enter your email first"
+        );
+
+        return;
+
+      }
+
+      try {
+
+        await sendPasswordResetEmail(
+          auth,
+          email
+        );
+
+        alert(
+          "Password reset email sent 📩"
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+        alert(error.message);
+
+      }
+
+    };
 
   return (
 
@@ -86,11 +158,15 @@ function Login() {
         <div className="text-center">
 
           <h1 className="text-5xl font-bold text-purple-700">
+
             TripTales
+
           </h1>
 
           <p className="text-gray-600 mt-4 text-lg">
+
             Travel through real stories.
+
           </p>
 
         </div>
@@ -103,26 +179,79 @@ function Login() {
             type="email"
             placeholder="Email Address"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
             className="w-full p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
           />
 
           {/* Password */}
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
-          />
+          <div className="relative">
+
+            <input
+              type={
+                showPassword
+                  ? "text"
+                  : "password"
+              }
+              placeholder="Password"
+              value={password}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
+              className="w-full p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
+            />
+
+            <button
+              type="button"
+              onClick={() =>
+                setShowPassword(
+                  !showPassword
+                )
+              }
+              className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-600"
+            >
+
+              {showPassword
+                ? "🙈"
+                : "👁️"}
+
+            </button>
+
+          </div>
+
+          {/* Forgot Password */}
+          {!isSignup && (
+
+            <div className="text-right">
+
+              <button
+                onClick={
+                  handleForgotPassword
+                }
+                className="text-purple-700 text-sm font-semibold hover:underline"
+              >
+
+                Forgot Password?
+
+              </button>
+
+            </div>
+
+          )}
 
           {/* Login / Signup Button */}
           <button
             onClick={handleAuth}
+            disabled={loading}
             className="w-full bg-purple-600 hover:bg-purple-700 transition-all duration-300 text-white py-4 rounded-2xl text-lg font-semibold shadow-xl"
           >
 
-            {isSignup ? "Create Account" : "Login"}
+            {loading
+              ? "Please Wait..."
+              : isSignup
+              ? "Create Account"
+              : "Login"}
 
           </button>
 
@@ -142,6 +271,7 @@ function Login() {
           {/* Google Login */}
           <button
             onClick={handleGoogleLogin}
+            disabled={loading}
             className="w-full bg-white text-black py-4 rounded-2xl text-lg font-semibold shadow-xl hover:scale-105 transition-all duration-300"
           >
 
@@ -178,6 +308,7 @@ function Login() {
     </div>
 
   );
+
 }
 
 export default Login;
