@@ -6,6 +6,8 @@ import axios from "axios";
 
 import { useAuth } from "../context/AuthContext";
 
+import { auth } from "../firebase";
+
 function Explore({ trips = [] }) {
 
   const navigate = useNavigate();
@@ -26,6 +28,9 @@ function Explore({ trips = [] }) {
 
   const [localTrips, setLocalTrips] =
     useState([]);
+
+  const [activeMenuId, setActiveMenuId] =
+    useState(null);
 
   useEffect(() => {
     setLocalTrips(trips);
@@ -140,6 +145,7 @@ function Explore({ trips = [] }) {
           {showMenu && (
 
             <div className="absolute top-16 right-0 w-56 bg-white rounded-3xl shadow-2xl overflow-hidden z-50">
+
               <button
                 onClick={() =>
                   navigate("/profile")
@@ -308,79 +314,239 @@ function Explore({ trips = [] }) {
 
         {filteredTrips.length > 0 ? (
 
-          filteredTrips.map((trip) => (
+          filteredTrips.map((trip) => {
 
-            <div
-              key={trip._id}
-              className="bg-white/40 backdrop-blur-xl rounded-[35px] overflow-hidden shadow-2xl hover:scale-[1.02] transition-all duration-300"
-            >
+            const isOwner =
+              trip.userId ===
+              auth.currentUser?.uid;
 
-              {/* Image */}
-              <img
-                src={trip.image}
-                alt={trip.title}
-                className="w-full h-[260px] object-cover"
-              />
+            return (
 
-              {/* Content */}
-              <div className="p-8">
+              <div
+                key={trip._id}
+                className="bg-white/40 backdrop-blur-xl rounded-[35px] overflow-hidden shadow-2xl hover:scale-[1.02] transition-all duration-300"
+              >
 
-                <h2 className="text-3xl font-bold text-gray-800">
+                {/* Image */}
+                <img
+                  src={trip.image}
+                  alt={trip.title}
+                  className="w-full h-[260px] object-cover"
+                />
 
-                  {trip.title}
+                {/* Content */}
+                <div className="p-8">
 
-                </h2>
+                  {/* User Info */}
+                  <div className="flex items-center justify-between mb-4">
 
-                <div className="flex items-center justify-between mt-5">
+                    <div className="flex items-center gap-3">
 
-                  <p className="text-gray-600 text-lg">
+                      <img
+                        src={
+                          trip.userPhoto ||
+                          "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                        }
+                        alt="user"
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
 
-                    {trip.type}
+                      <div>
 
-                  </p>
+                        <p className="font-semibold text-gray-800">
 
-                  <p className="text-gray-700 text-xl font-semibold">
+                          {trip.userName || "Anonymous"}
 
-                    {trip.displayBudget}
+                        </p>
 
-                  </p>
+                        <p className="text-sm text-gray-500">
 
-                </div>
+                          Trip Creator
 
-                {/* Buttons */}
-                <div className="flex gap-3 mt-8">
+                        </p>
 
-                  <button
-                    onClick={() =>
-                      navigate(
-                        `/itinerary/${trip._id}`
-                      )
-                    }
-                    className="flex-1 bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white py-4 rounded-3xl text-lg font-semibold shadow-xl hover:scale-105 transition-all duration-300"
-                  >
+                      </div>
 
-                    View
+                    </div>
 
-                  </button>
+                  </div>
 
-                  <button
-                    onClick={() =>
-                      handleDelete(trip._id)
-                    }
-                    className="bg-red-500 text-white px-5 rounded-3xl hover:bg-red-600 transition-all duration-300"
-                  >
+                  <h2 className="text-3xl font-bold text-gray-800">
 
-                    🗑
+                    {trip.title}
 
-                  </button>
+                  </h2>
+
+                  <div className="flex items-center justify-between mt-5">
+
+                    <p className="text-gray-600 text-lg">
+
+                      {trip.type}
+
+                    </p>
+
+                    <p className="text-gray-700 text-xl font-semibold">
+
+                      {trip.displayBudget}
+
+                    </p>
+
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center justify-between mt-8">
+
+                    <button
+                      onClick={() =>
+                        navigate(
+                          `/itinerary/${trip._id}`
+                        )
+                      }
+                      className="bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white px-6 py-3 rounded-3xl font-semibold shadow-xl hover:scale-105 transition-all duration-300"
+                    >
+
+                      View Trip
+
+                    </button>
+
+                    <div className="relative">
+
+                      {/* Three Dots */}
+                      <button
+                        onClick={() =>
+                          setActiveMenuId(
+                            activeMenuId === trip._id
+                              ? null
+                              : trip._id
+                          )
+                        }
+                        className="bg-white/60 px-4 py-2 rounded-2xl text-2xl shadow-lg hover:scale-105 transition-all duration-300"
+                      >
+
+                        ⋮
+
+                      </button>
+
+                      {/* Dropdown */}
+                      {activeMenuId === trip._id && (
+
+                        <div className="absolute right-0 mt-3 w-48 bg-white rounded-2xl shadow-2xl overflow-hidden z-50">
+
+                          {/* OWNER MENU */}
+                          {isOwner ? (
+
+                            <>
+
+                              <button
+                                onClick={() =>
+                                  navigate(
+                                    `/itinerary/${trip._id}`
+                                  )
+                                }
+                                className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
+                              >
+
+                                👁 View
+
+                              </button>
+
+                              <button
+                                className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
+                              >
+
+                                ✏ Edit
+
+                              </button>
+
+                              <button
+                                className="w-full text-left px-5 py-4 hover:bg-yellow-100 transition-all duration-200"
+                              >
+
+                                📦 Archive
+
+                              </button>
+
+                              <button
+                                className="w-full text-left px-5 py-4 hover:bg-green-100 transition-all duration-200"
+                              >
+
+                                📤 Share
+
+                              </button>
+
+                              <button
+                                onClick={() =>
+                                  handleDelete(trip._id)
+                                }
+                                className="w-full text-left px-5 py-4 text-red-500 hover:bg-red-100 transition-all duration-200"
+                              >
+
+                                🗑 Delete
+
+                              </button>
+
+                            </>
+
+                          ) : (
+
+                            <>
+
+                              <button
+                                onClick={() =>
+                                  navigate(
+                                    `/itinerary/${trip._id}`
+                                  )
+                                }
+                                className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
+                              >
+
+                                👁 View
+
+                              </button>
+
+                              <button
+                                className="w-full text-left px-5 py-4 hover:bg-pink-100 transition-all duration-200"
+                              >
+
+                                ❤️ Like
+
+                              </button>
+
+                              <button
+                                className="w-full text-left px-5 py-4 hover:bg-blue-100 transition-all duration-200"
+                              >
+
+                                🔖 Save
+
+                              </button>
+
+                              <button
+                                className="w-full text-left px-5 py-4 hover:bg-green-100 transition-all duration-200"
+                              >
+
+                                📤 Share
+
+                              </button>
+
+                            </>
+
+                          )}
+
+                        </div>
+
+                      )}
+
+                    </div>
+
+                  </div>
 
                 </div>
 
               </div>
 
-            </div>
+            );
 
-          ))
+          })
 
         ) : (
 
