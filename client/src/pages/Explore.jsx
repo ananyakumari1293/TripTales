@@ -7,6 +7,18 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
 import { auth } from "../firebase";
+import {
+  FiMoreVertical,
+  FiEye,
+  FiShare2,
+  FiBookmark,
+  FiEdit,
+  FiTrash2,
+  FiArchive,
+} from "react-icons/fi";
+
+import { AiOutlineHeart }
+from "react-icons/ai";
 
 function Explore({ trips = [] }) {
 
@@ -110,7 +122,7 @@ function Explore({ trips = [] }) {
 
   return (
 
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-[#fff1f7] via-[#ffe4ee] to-[#ffeef8] pb-16">
 
       {/* Navbar */}
       <nav className="flex items-center justify-between px-6 md:px-10 py-6">
@@ -310,7 +322,7 @@ function Explore({ trips = [] }) {
       </div>
 
       {/* Trips */}
-      <section className="grid md:grid-cols-3 gap-10 px-6 md:px-10 mt-16">
+      <section className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-6 md:px-10 mt-16">
 
         {filteredTrips.length > 0 ? (
 
@@ -324,18 +336,18 @@ function Explore({ trips = [] }) {
 
               <div
                 key={trip._id}
-                className="bg-white/40 backdrop-blur-xl rounded-[35px] overflow-hidden shadow-2xl hover:scale-[1.02] transition-all duration-300"
+                className="bg-white/70 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-2xl hover:scale-[1.02] transition-all duration-300"
               >
 
                 {/* Image */}
                 <img
                   src={trip.image}
                   alt={trip.title}
-                  className="w-full h-[260px] object-cover"
+                  className="w-full h-[190px] object-cover"
                 />
 
                 {/* Content */}
-                <div className="p-8">
+                <div className="p-5">
 
                   {/* User Info */}
                   <div className="flex items-center justify-between mb-4">
@@ -423,7 +435,7 @@ function Explore({ trips = [] }) {
                         className="bg-white/60 px-4 py-2 rounded-2xl text-2xl shadow-lg hover:scale-105 transition-all duration-300"
                       >
 
-                        ⋮
+                        <FiMoreVertical size={20} />
 
                       </button>
 
@@ -446,7 +458,8 @@ function Explore({ trips = [] }) {
                                 className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
                               >
 
-                                👁 View
+                                <FiEye />
+                                 View
 
                               </button>
 
@@ -454,7 +467,8 @@ function Explore({ trips = [] }) {
                                 className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
                               >
 
-                                ✏ Edit
+                                <FiEdit />
+Edit
 
                               </button>
 
@@ -462,7 +476,8 @@ function Explore({ trips = [] }) {
                                 className="w-full text-left px-5 py-4 hover:bg-yellow-100 transition-all duration-200"
                               >
 
-                                📦 Archive
+                                <FiArchive />
+Archive
 
                               </button>
 
@@ -470,7 +485,8 @@ function Explore({ trips = [] }) {
                                 className="w-full text-left px-5 py-4 hover:bg-green-100 transition-all duration-200"
                               >
 
-                                📤 Share
+                                <FiShare2 />
+Share
 
                               </button>
 
@@ -481,7 +497,8 @@ function Explore({ trips = [] }) {
                                 className="w-full text-left px-5 py-4 text-red-500 hover:bg-red-100 transition-all duration-200"
                               >
 
-                                🗑 Delete
+                                <FiTrash2 />
+Delete
 
                               </button>
 
@@ -500,7 +517,8 @@ function Explore({ trips = [] }) {
                                 className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
                               >
 
-                                👁 View
+                              <FiEye />
+View
 
                               </button>
 
@@ -508,7 +526,8 @@ function Explore({ trips = [] }) {
                                 className="w-full text-left px-5 py-4 hover:bg-pink-100 transition-all duration-200"
                               >
 
-                                ❤️ Like
+                                <AiOutlineHeart />
+Like
 
                               </button>
 
@@ -516,7 +535,8 @@ function Explore({ trips = [] }) {
                                 className="w-full text-left px-5 py-4 hover:bg-blue-100 transition-all duration-200"
                               >
 
-                                🔖 Save
+                                <FiBookmark />
+Save
 
                               </button>
 
@@ -524,7 +544,8 @@ function Explore({ trips = [] }) {
                                 className="w-full text-left px-5 py-4 hover:bg-green-100 transition-all duration-200"
                               >
 
-                                📤 Share
+                                <FiShare2 />
+Share
 
                               </button>
 
