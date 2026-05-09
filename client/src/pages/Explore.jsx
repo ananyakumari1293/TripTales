@@ -316,7 +316,7 @@ function Explore({ trips = [] }) {
 
               <div
                 key={trip._id}
-                className="bg-white/70 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-xl"
+                className="bg-white/70 backdrop-blur-xl rounded-[32px] overflow-visible shadow-xl"
               >
 
                 {/* Image */}
