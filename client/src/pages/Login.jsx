@@ -14,6 +14,8 @@ import {
   googleProvider,
 } from "../firebase";
 
+import axios from "axios";
+
 function Login() {
 
   const navigate = useNavigate();
@@ -37,9 +39,28 @@ function Login() {
 
       setLoading(true);
 
-      await signInWithPopup(
-        auth,
-        googleProvider
+      const result =
+        await signInWithPopup(
+          auth,
+          googleProvider
+        );
+
+      const user = result.user;
+
+      await axios.post(
+        "https://triptales-1-pb97.onrender.com/api/users",
+        {
+          firebaseUid: user.uid,
+
+          username:
+            user.displayName ||
+            "TripTales User",
+
+          email: user.email,
+
+          profilePhoto:
+            user.photoURL || "",
+        }
       );
 
       navigate("/explore");
@@ -72,12 +93,31 @@ function Login() {
 
       setLoading(true);
 
+      let result;
+
       if (isSignup) {
 
-        await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
+        result =
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+        const user = result.user;
+
+        await axios.post(
+          "https://triptales-1-pb97.onrender.com/api/users",
+          {
+            firebaseUid: user.uid,
+
+            username:
+              email.split("@")[0],
+
+            email: user.email,
+
+            profilePhoto: "",
+          }
         );
 
         alert(

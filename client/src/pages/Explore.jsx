@@ -430,7 +430,7 @@ function Explore({ trips = [] }) {
                       {/* Dropdown */}
                       {activeMenuId === trip._id && (
 
-                        <div className="absolute right-0 mt-3 w-48 bg-white rounded-2xl shadow-2xl overflow-hidden z-50">
+                        <div className="absolute right-0 bottom-14 w-48 bg-white rounded-2xl shadow-2xl overflow-hidden z-50">
 
                           {/* OWNER MENU */}
                           {isOwner ? (
