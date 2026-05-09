@@ -140,6 +140,16 @@ function Explore({ trips = [] }) {
           {showMenu && (
 
             <div className="absolute top-16 right-0 w-56 bg-white rounded-3xl shadow-2xl overflow-hidden z-50">
+              <button
+                onClick={() =>
+                  navigate("/profile")
+                }
+                className="w-full text-left px-6 py-4 hover:bg-purple-100 transition-all duration-200"
+              >
+
+                👤 My Profile
+
+              </button>
 
               <button
                 onClick={() =>
@@ -171,17 +181,6 @@ function Explore({ trips = [] }) {
               >
 
                 ℹ About Us
-
-              </button>
-
-              <button
-                onClick={() =>
-                  navigate("/profile")
-                }
-                className="w-full text-left px-6 py-4 hover:bg-purple-100 transition-all duration-200"
-              >
-
-                👤 My Profile
 
               </button>
 
