@@ -19,6 +19,13 @@ import {
 
 import { AiOutlineHeart }
 from "react-icons/ai";
+import {
+
+  AiOutlineHeart,
+
+  AiFillHeart
+
+} from "react-icons/ai";
 
 import { FaRegCommentDots }
 from "react-icons/fa";
@@ -617,7 +624,21 @@ Delete
   className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
 >
 
-  <AiOutlineHeart />
+  <AiFillHeart
+
+  className={
+
+    trip.likes?.includes(
+      auth.currentUser?.uid
+    )
+
+      ? "text-red-500"
+
+      : "text-black"
+
+  }
+
+/>
 
   {trip.likes?.includes(
     auth.currentUser?.uid
@@ -704,7 +725,21 @@ Delete
   className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
 >
 
-  <FiBookmark />
+  <FiBookmark
+
+  className={
+
+    trip.savedBy?.includes(
+      auth.currentUser?.uid
+    )
+
+      ? "text-pink-500"
+
+      : "text-black"
+
+  }
+
+/>
 
   {trip.savedBy?.includes(
     auth.currentUser?.uid
@@ -716,7 +751,7 @@ Delete
 
 </button>          
 
-                              <button
+<button
 
   onClick={(e) => {
 
@@ -726,33 +761,13 @@ Delete
 
       `${window.location.origin}/itinerary/${trip._id}`;
 
-    if (
-      navigator.share
-    ) {
+    navigator.clipboard.writeText(
+      tripUrl
+    );
 
-      navigator.share({
-
-        title:
-          trip.title,
-
-        text:
-          "Check out this trip on TripTales ✨",
-
-        url: tripUrl,
-
-      });
-
-    } else {
-
-      navigator.clipboard.writeText(
-        tripUrl
-      );
-
-      alert(
-        "Link copied!"
-      );
-
-    }
+    alert(
+      "Trip link copied!"
+    );
 
   }}
 
@@ -770,16 +785,14 @@ Delete
 
     e.stopPropagation();
 
-    setShowComments({
+    setShowComments((prev) => ({
 
-      ...showComments,
+      ...prev,
 
       [trip._id]:
-        !showComments[
-          trip._id
-        ],
+        !prev[trip._id],
 
-    });
+    }));
 
   }}
 
