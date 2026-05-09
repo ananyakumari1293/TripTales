@@ -438,7 +438,7 @@ function Explore({ trips = [] }) {
                       {activeMenuId ===
                         trip._id && (
 
-                        <div className="absolute right-0 top-14 w-52 bg-white rounded-3xl shadow-2xl overflow-hidden z-50">
+                        <div className="absolute bottom-16 right-0 w-52 bg-white rounded-3xl shadow-2xl overflow-hidden z-50">
 
                           {isOwner ? (
 
