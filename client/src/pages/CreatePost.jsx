@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
+import { auth } from "../firebase";
+
 function CreatePost() {
 
   const navigate = useNavigate();
@@ -64,35 +66,46 @@ function CreatePost() {
         .split(",")
         .map((item) => item.trim()),
 
+      userId:
+        auth.currentUser?.uid || "",
+
+      userName:
+        auth.currentUser?.displayName ||
+        auth.currentUser?.email ||
+        "Anonymous",
+
+      userPhoto:
+        auth.currentUser?.photoURL || "",
+
     };
 
     try {
 
       const response =
-       await axios.post(
-        "https://triptales-1-pb97.onrender.com/api/trips",
-         newTrip
+        await axios.post(
+          "https://triptales-1-pb97.onrender.com/api/trips",
+          newTrip
+        );
+
+      console.log(response.data);
+
+      alert(
+        "Trip Published Successfully 🔥"
       );
 
-    console.log(response.data);
-    
-    alert(
-    "Trip Published Successfully 🔥"
-    );
+      navigate("/explore");
 
-     navigate("/explore");
+      window.location.reload();
 
-    window.location.reload();
+    } catch (error) {
 
-   } catch (error) {
+      console.log(error);
 
-    console.log(error);
+      alert(
+        "Failed to publish trip ❌"
+      );
 
-    alert(
-    "Failed to publish trip ❌"
-  );
-
-}
+    }
 
   };
 
@@ -342,6 +355,7 @@ function CreatePost() {
     </div>
 
   );
+
 }
 
 export default CreatePost;

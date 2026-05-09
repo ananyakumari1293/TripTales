@@ -62,6 +62,36 @@ const tripSchema = new mongoose.Schema({
     default: [],
   },
 
+  userId: {
+    type: String,
+    default: "",
+  },
+
+  userName: {
+    type: String,
+    default: "",
+  },
+
+  userPhoto: {
+    type: String,
+    default: "",
+  },
+
+  likes: {
+    type: [String],
+    default: [],
+  },
+
+  savedBy: {
+    type: [String],
+    default: [],
+  },
+
+  isArchived: {
+    type: Boolean,
+    default: false,
+  },
+
 }, {
   timestamps: true,
 });
