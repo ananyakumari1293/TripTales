@@ -13,12 +13,15 @@ const userRoutes =
 require("dotenv").config();
 
 const app = express();
+const uploadRoutes =
+  require("./routes/uploadRoutes");
 
 app.use(cors());
 
 app.use(express.json());
 
 app.use("/api/trips", tripRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.use("/api/users", userRoutes);
 
