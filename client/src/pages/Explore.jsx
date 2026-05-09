@@ -336,6 +336,12 @@ function Explore({ trips = [] }) {
 
               <div
                 key={trip._id}
+                onClick={() =>
+    navigate(
+      `/itinerary/${trip._id}`
+    )
+  }
+
                 className="bg-white/70 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-2xl hover:scale-[1.02] transition-all duration-300"
               >
 
@@ -517,8 +523,7 @@ Delete
                                 className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
                               >
 
-                              <FiEye />
-View
+                              
 
                               </button>
 
