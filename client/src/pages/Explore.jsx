@@ -1,11 +1,8 @@
 import { useNavigate } from "react-router-dom";
-
 import { useState, useEffect } from "react";
-
 import axios from "axios";
 
 import { useAuth } from "../context/AuthContext";
-
 import { auth } from "../firebase";
 
 import {
@@ -15,11 +12,11 @@ import {
   FiEdit,
   FiTrash2,
   FiArchive,
+  FiSettings,
+  FiInfo,
 } from "react-icons/fi";
 
-import {
-  AiFillHeart,
-} from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 
 function Explore({ trips = [] }) {
 
@@ -51,13 +48,13 @@ function Explore({ trips = [] }) {
 
   }, [trips]);
 
+  /* FILTERS */
   const filteredTrips =
     localTrips.filter((trip) => {
 
       const matchesType =
 
         selectedType === "All" ||
-
         trip.type === selectedType;
 
       const matchesSearch =
@@ -89,6 +86,7 @@ function Explore({ trips = [] }) {
 
     });
 
+  /* LOGOUT */
   const handleLogout =
     async () => {
 
@@ -98,15 +96,14 @@ function Explore({ trips = [] }) {
 
     };
 
+  /* DELETE */
   const handleDelete =
     async (id) => {
 
       try {
 
         await axios.delete(
-
           `https://triptales-1-pb97.onrender.com/api/trips/${id}`
-
         );
 
         const updatedTrips =
@@ -127,6 +124,10 @@ function Explore({ trips = [] }) {
 
         console.log(error);
 
+        alert(
+          "Delete Failed"
+        );
+
       }
 
     };
@@ -135,10 +136,10 @@ function Explore({ trips = [] }) {
 
     <div className="min-h-screen bg-gradient-to-br from-[#fff1f7] via-[#ffe4ee] to-[#ffeef8] pb-16">
 
-      {/* Navbar */}
+      {/* NAVBAR */}
       <nav className="flex items-center justify-between px-6 md:px-10 py-6">
 
-        <h1 className="text-4xl font-bold text-[#1f1f1f]">
+        <h1 className="text-4xl font-bold text-black">
 
           TripTales
 
@@ -146,6 +147,7 @@ function Explore({ trips = [] }) {
 
         <div className="flex items-center gap-4 relative">
 
+          {/* CREATE */}
           <button
             onClick={() =>
               navigate("/create-post")
@@ -157,11 +159,12 @@ function Explore({ trips = [] }) {
 
           </button>
 
+          {/* PROFILE IMAGE */}
           <div
             onClick={() =>
               setShowMenu(!showMenu)
             }
-            className="w-12 h-12 rounded-full overflow-hidden cursor-pointer"
+            className="w-12 h-12 rounded-full overflow-hidden cursor-pointer border-2 border-white shadow-lg"
           >
 
             <img
@@ -178,9 +181,10 @@ function Explore({ trips = [] }) {
 
           </div>
 
+          {/* NAVBAR MENU */}
           {showMenu && (
 
-            <div className="absolute top-16 right-0 w-56 bg-white rounded-3xl shadow-2xl overflow-hidden z-50">
+            <div className="absolute top-16 right-0 w-60 bg-white rounded-3xl shadow-2xl overflow-hidden z-50">
 
               <button
                 onClick={() =>
@@ -189,7 +193,33 @@ function Explore({ trips = [] }) {
                 className="w-full text-left px-6 py-4 hover:bg-pink-50"
               >
 
-                My Profile
+                👤 My Profile
+
+              </button>
+
+              <button
+                onClick={() =>
+                  navigate("/settings")
+                }
+                className="w-full text-left px-6 py-4 hover:bg-pink-50 flex items-center gap-3"
+              >
+
+                <FiSettings />
+
+                Settings
+
+              </button>
+
+              <button
+                onClick={() =>
+                  navigate("/about")
+                }
+                className="w-full text-left px-6 py-4 hover:bg-pink-50 flex items-center gap-3"
+              >
+
+                <FiInfo />
+
+                About Us
 
               </button>
 
@@ -198,7 +228,7 @@ function Explore({ trips = [] }) {
                 className="w-full text-left px-6 py-4 text-red-500 hover:bg-red-50"
               >
 
-                Logout
+                🚪 Logout
 
               </button>
 
@@ -210,10 +240,10 @@ function Explore({ trips = [] }) {
 
       </nav>
 
-      {/* Hero */}
+      {/* HERO */}
       <section className="text-center mt-6 px-4">
 
-        <h2 className="text-5xl md:text-6xl font-bold text-[#1f1f1f]">
+        <h2 className="text-5xl md:text-6xl font-bold text-black">
 
           Discover dreamy
           <br />
@@ -221,13 +251,21 @@ function Explore({ trips = [] }) {
 
         </h2>
 
+        <p className="text-gray-500 mt-5 text-lg">
+
+          Explore real experiences
+          shared by travelers.
+
+        </p>
+
       </section>
 
-      {/* Filters */}
+      {/* FILTERS */}
       <div className="max-w-6xl mx-auto mt-10 bg-white/60 backdrop-blur-xl rounded-[35px] shadow-xl p-5">
 
         <div className="grid md:grid-cols-3 gap-4">
 
+          {/* SEARCH */}
           <input
             type="text"
             placeholder="Search destination..."
@@ -240,6 +278,7 @@ function Explore({ trips = [] }) {
             className="p-4 rounded-2xl bg-white outline-none"
           />
 
+          {/* TYPE */}
           <select
             value={selectedType}
             onChange={(e) =>
@@ -268,6 +307,7 @@ function Explore({ trips = [] }) {
 
           </select>
 
+          {/* BUDGET */}
           <select
             value={selectedBudget}
             onChange={(e) =>
@@ -300,7 +340,7 @@ function Explore({ trips = [] }) {
 
       </div>
 
-      {/* Trips */}
+      {/* TRIPS */}
       <section className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-6 md:px-10 mt-14">
 
         {filteredTrips.length > 0 ? (
@@ -308,7 +348,6 @@ function Explore({ trips = [] }) {
           filteredTrips.map((trip) => {
 
             const isOwner =
-
               trip.userId ===
               auth.currentUser?.uid;
 
@@ -316,20 +355,20 @@ function Explore({ trips = [] }) {
 
               <div
                 key={trip._id}
-                className="bg-white/70 backdrop-blur-xl rounded-[32px] overflow-visible shadow-xl"
+                className="bg-white/70 backdrop-blur-xl rounded-[32px] overflow-visible shadow-xl relative"
               >
 
-                {/* Image */}
+                {/* IMAGE */}
                 <img
                   src={trip.image}
                   alt={trip.title}
-                  className="w-full h-[190px] object-cover"
+                  className="w-full h-[190px] object-cover rounded-t-[32px]"
                 />
 
-                {/* Content */}
+                {/* CONTENT */}
                 <div className="p-5">
 
-                  {/* User */}
+                  {/* USER */}
                   <div className="flex items-center gap-3">
 
                     <img
@@ -363,14 +402,14 @@ function Explore({ trips = [] }) {
 
                   </div>
 
-                  {/* Title */}
+                  {/* TITLE */}
                   <h2 className="text-2xl font-bold mt-4">
 
                     {trip.title}
 
                   </h2>
 
-                  {/* Budget */}
+                  {/* BUDGET */}
                   <div className="flex items-center justify-between mt-4">
 
                     <p className="text-gray-500 text-sm">
@@ -387,24 +426,24 @@ function Explore({ trips = [] }) {
 
                   </div>
 
-                  {/* Actions */}
+                  {/* ACTIONS */}
                   <div className="flex items-center justify-between mt-5">
 
-                    {/* View */}
+                    {/* VIEW */}
                     <button
                       onClick={() =>
                         navigate(
                           `/itinerary/${trip._id}`
                         )
                       }
-                      className="bg-black text-white px-5 py-3 rounded-2xl"
+                      className="bg-black text-white px-5 py-3 rounded-2xl hover:scale-105 transition-all duration-300"
                     >
 
                       View Itinerary
 
                     </button>
 
-                    {/* Menu */}
+                    {/* MENU */}
                     <div className="relative">
 
                       <button
@@ -415,8 +454,7 @@ function Explore({ trips = [] }) {
 
                           setActiveMenuId(
 
-                            activeMenuId ===
-                            trip._id
+                            activeMenuId === trip._id
 
                               ? null
 
@@ -426,15 +464,14 @@ function Explore({ trips = [] }) {
 
                         }}
 
-                        className="bg-white p-3 rounded-2xl shadow-lg"
+                        className="bg-white p-3 rounded-2xl shadow-lg hover:scale-105 transition-all duration-300"
                       >
 
-                        <FiMoreVertical
-                          size={20}
-                        />
+                        <FiMoreVertical size={20} />
 
                       </button>
 
+                      {/* DROPDOWN */}
                       {activeMenuId ===
                         trip._id && (
 
@@ -443,8 +480,15 @@ function Explore({ trips = [] }) {
                           {isOwner ? (
 
                             <>
-
+                              {/* EDIT */}
                               <button
+
+                                onClick={() =>
+                                  navigate(
+                                    `/edit-trip/${trip._id}`
+                                  )
+                                }
+
                                 className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
                               >
 
@@ -454,6 +498,7 @@ function Explore({ trips = [] }) {
 
                               </button>
 
+                              {/* ARCHIVE */}
                               <button
                                 className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
                               >
@@ -464,9 +509,10 @@ function Explore({ trips = [] }) {
 
                               </button>
 
+                              {/* SHARE */}
                               <button
 
-                                onClick={(e) => {
+                                onClick={async (e) => {
 
                                   e.stopPropagation();
 
@@ -474,13 +520,42 @@ function Explore({ trips = [] }) {
 
                                     `${window.location.origin}/itinerary/${trip._id}`;
 
-                                  navigator.clipboard.writeText(
-                                    tripUrl
-                                  );
+                                  try {
 
-                                  alert(
-                                    "Trip link copied!"
-                                  );
+                                    if (
+                                      navigator.share
+                                    ) {
+
+                                      await navigator.share({
+
+                                        title:
+                                          trip.title,
+
+                                        text:
+                                          "Check out this trip ✨",
+
+                                        url:
+                                          tripUrl,
+
+                                      });
+
+                                    } else {
+
+                                      navigator.clipboard.writeText(
+                                        tripUrl
+                                      );
+
+                                      alert(
+                                        "Trip link copied!"
+                                      );
+
+                                    }
+
+                                  } catch (error) {
+
+                                    console.log(error);
+
+                                  }
 
                                 }}
 
@@ -493,6 +568,7 @@ function Explore({ trips = [] }) {
 
                               </button>
 
+                              {/* DELETE */}
                               <button
                                 onClick={() =>
                                   handleDelete(
@@ -513,8 +589,7 @@ function Explore({ trips = [] }) {
                           ) : (
 
                             <>
-
-                              {/* Like */}
+                              {/* LIKE */}
                               <button
 
                                 onClick={async (e) => {
@@ -617,7 +692,7 @@ function Explore({ trips = [] }) {
 
                               </button>
 
-                              {/* Save */}
+                              {/* SAVE */}
                               <button
 
                                 onClick={async (e) => {
@@ -720,10 +795,10 @@ function Explore({ trips = [] }) {
 
                               </button>
 
-                              {/* Share */}
+                              {/* SHARE */}
                               <button
 
-                                onClick={(e) => {
+                                onClick={async (e) => {
 
                                   e.stopPropagation();
 
@@ -731,13 +806,42 @@ function Explore({ trips = [] }) {
 
                                     `${window.location.origin}/itinerary/${trip._id}`;
 
-                                  navigator.clipboard.writeText(
-                                    tripUrl
-                                  );
+                                  try {
 
-                                  alert(
-                                    "Trip link copied!"
-                                  );
+                                    if (
+                                      navigator.share
+                                    ) {
+
+                                      await navigator.share({
+
+                                        title:
+                                          trip.title,
+
+                                        text:
+                                          "Check out this trip ✨",
+
+                                        url:
+                                          tripUrl,
+
+                                      });
+
+                                    } else {
+
+                                      navigator.clipboard.writeText(
+                                        tripUrl
+                                      );
+
+                                      alert(
+                                        "Trip link copied!"
+                                      );
+
+                                    }
+
+                                  } catch (error) {
+
+                                    console.log(error);
+
+                                  }
 
                                 }}
 
