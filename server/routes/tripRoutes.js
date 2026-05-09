@@ -68,5 +68,216 @@ router.delete("/:id", async (req, res) => {
   }
 
 });
+router.put(
+  "/like/:id",
+
+  async (req, res) => {
+
+    try {
+
+      const trip =
+        await Trip.findById(
+          req.params.id
+        );
+
+      const { userId } =
+        req.body;
+
+      if (!trip) {
+
+        return res
+          .status(404)
+          .json({
+            message:
+              "Trip not found",
+          });
+
+      }
+
+      const alreadyLiked =
+        trip.likes.includes(
+          userId
+        );
+
+      if (alreadyLiked) {
+
+        trip.likes =
+          trip.likes.filter(
+            (id) =>
+              id !== userId
+          );
+
+      } else {
+
+        trip.likes.push(
+          userId
+        );
+
+      }
+
+      await trip.save();
+
+      res.status(200).json({
+
+        likes:
+          trip.likes,
+
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+
+        message:
+          "Like Failed",
+
+      });
+
+    }
+
+  }
+);
+router.put(
+  "/save/:id",
+
+  async (req, res) => {
+
+    try {
+
+      const trip =
+        await Trip.findById(
+          req.params.id
+        );
+
+      const { userId } =
+        req.body;
+
+      if (!trip) {
+
+        return res
+          .status(404)
+          .json({
+            message:
+              "Trip not found",
+          });
+
+      }
+
+      const alreadySaved =
+        trip.savedBy.includes(
+          userId
+        );
+
+      if (alreadySaved) {
+
+        trip.savedBy =
+          trip.savedBy.filter(
+            (id) =>
+              id !== userId
+          );
+
+      } else {
+
+        trip.savedBy.push(
+          userId
+        );
+
+      }
+
+      await trip.save();
+
+      res.status(200).json({
+
+        savedBy:
+          trip.savedBy,
+
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+
+        message:
+          "Save Failed",
+
+      });
+
+    }
+
+  }
+);
+router.post(
+  "/comment/:id",
+
+  async (req, res) => {
+
+    try {
+
+      const trip =
+        await Trip.findById(
+          req.params.id
+        );
+
+      if (!trip) {
+
+        return res
+          .status(404)
+          .json({
+
+            message:
+              "Trip not found",
+
+          });
+
+      }
+
+      const newComment = {
+
+        userId:
+          req.body.userId,
+
+        userName:
+          req.body.userName,
+
+        userPhoto:
+          req.body.userPhoto,
+
+        text:
+          req.body.text,
+
+      };
+
+      trip.comments.push(
+        newComment
+      );
+
+      await trip.save();
+
+      res.status(200).json({
+
+        comments:
+          trip.comments,
+
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+
+        message:
+          "Comment Failed",
+
+      });
+
+    }
+
+  }
+);
 
 module.exports = router;

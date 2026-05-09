@@ -20,6 +20,9 @@ import {
 import { AiOutlineHeart }
 from "react-icons/ai";
 
+import { FaRegCommentDots }
+from "react-icons/fa";
+
 function Explore({ trips = [] }) {
 
   const navigate = useNavigate();
@@ -43,6 +46,14 @@ function Explore({ trips = [] }) {
 
   const [activeMenuId, setActiveMenuId] =
     useState(null);
+
+  const [commentText,
+  setCommentText] =
+  useState({});
+
+const [showComments,
+  setShowComments] =
+  useState({});
 
   useEffect(() => {
     setLocalTrips(trips);
@@ -431,13 +442,17 @@ function Explore({ trips = [] }) {
 
                       {/* Three Dots */}
                       <button
-                        onClick={() =>
+                      onClick={(e) => {
+                        e.stopPropagation();
+
                           setActiveMenuId(
-                            activeMenuId === trip._id
+                           activeMenuId === trip._id
                               ? null
-                              : trip._id
-                          )
-                        }
+                            : trip._id
+                       );
+
+}}
+
                         className="bg-white/60 px-4 py-2 rounded-2xl text-2xl shadow-lg hover:scale-105 transition-all duration-300"
                       >
 
@@ -527,32 +542,255 @@ Delete
 
                               </button>
 
+                             <button
+
+  onClick={async (e) => {
+
+    e.stopPropagation();
+
+    try {
+
+      await axios.put(
+
+        `https://triptales-1-pb97.onrender.com/api/trips/like/${trip._id}`,
+
+        {
+          userId:
+            auth.currentUser?.uid,
+        }
+
+      );
+
+      const updatedTrips =
+        localTrips.map((t) => {
+
+          if (
+            t._id === trip._id
+          ) {
+
+            const alreadyLiked =
+              t.likes?.includes(
+                auth.currentUser?.uid
+              );
+
+            return {
+
+              ...t,
+
+              likes:
+                alreadyLiked
+
+                  ? t.likes.filter(
+                      (id) =>
+                        id !==
+                        auth.currentUser?.uid
+                    )
+
+                  : [
+                      ...(t.likes ||
+                        []),
+
+                      auth.currentUser
+                        ?.uid,
+                    ],
+
+            };
+
+          }
+
+          return t;
+
+        });
+
+      setLocalTrips(
+        updatedTrips
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  }}
+
+  className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
+>
+
+  <AiOutlineHeart />
+
+  {trip.likes?.includes(
+    auth.currentUser?.uid
+  )
+
+    ? "Liked"
+
+    : "Like"}
+
+</button>
+
+                  <button
+
+  onClick={async (e) => {
+
+    e.stopPropagation();
+
+    try {
+
+      await axios.put(
+
+        `https://triptales-1-pb97.onrender.com/api/trips/save/${trip._id}`,
+
+        {
+          userId:
+            auth.currentUser?.uid,
+        }
+
+      );
+
+      const updatedTrips =
+        localTrips.map((t) => {
+
+          if (
+            t._id === trip._id
+          ) {
+
+            const alreadySaved =
+              t.savedBy?.includes(
+                auth.currentUser?.uid
+              );
+
+            return {
+
+              ...t,
+
+              savedBy:
+                alreadySaved
+
+                  ? t.savedBy.filter(
+                      (id) =>
+                        id !==
+                        auth.currentUser?.uid
+                    )
+
+                  : [
+                      ...(t.savedBy ||
+                        []),
+
+                      auth.currentUser
+                        ?.uid,
+                    ],
+
+            };
+
+          }
+
+          return t;
+
+        });
+
+      setLocalTrips(
+        updatedTrips
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  }}
+
+  className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
+>
+
+  <FiBookmark />
+
+  {trip.savedBy?.includes(
+    auth.currentUser?.uid
+  )
+
+    ? "Saved"
+
+    : "Save"}
+
+</button>          
+
                               <button
-                                className="w-full text-left px-5 py-4 hover:bg-pink-100 transition-all duration-200"
-                              >
 
-                                <AiOutlineHeart />
-Like
+  onClick={(e) => {
 
-                              </button>
+    e.stopPropagation();
 
-                              <button
-                                className="w-full text-left px-5 py-4 hover:bg-blue-100 transition-all duration-200"
-                              >
+    const tripUrl =
 
-                                <FiBookmark />
-Save
+      `${window.location.origin}/itinerary/${trip._id}`;
 
-                              </button>
+    if (
+      navigator.share
+    ) {
 
-                              <button
-                                className="w-full text-left px-5 py-4 hover:bg-green-100 transition-all duration-200"
-                              >
+      navigator.share({
 
-                                <FiShare2 />
-Share
+        title:
+          trip.title,
 
-                              </button>
+        text:
+          "Check out this trip on TripTales ✨",
+
+        url: tripUrl,
+
+      });
+
+    } else {
+
+      navigator.clipboard.writeText(
+        tripUrl
+      );
+
+      alert(
+        "Link copied!"
+      );
+
+    }
+
+  }}
+
+  className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
+>
+
+  <FiShare2 />
+
+  Share
+
+</button>
+<button
+
+  onClick={(e) => {
+
+    e.stopPropagation();
+
+    setShowComments({
+
+      ...showComments,
+
+      [trip._id]:
+        !showComments[
+          trip._id
+        ],
+
+    });
+
+  }}
+
+  className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
+>
+
+  <FaRegCommentDots />
+
+  Comment
+
+</button>
 
                             </>
 
