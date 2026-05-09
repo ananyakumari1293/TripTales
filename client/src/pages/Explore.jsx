@@ -7,9 +7,9 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
 import { auth } from "../firebase";
+
 import {
   FiMoreVertical,
-  FiEye,
   FiShare2,
   FiBookmark,
   FiEdit,
@@ -17,18 +17,9 @@ import {
   FiArchive,
 } from "react-icons/fi";
 
-import { AiOutlineHeart }
-from "react-icons/ai";
 import {
-
-  AiOutlineHeart,
-
-  AiFillHeart
-
+  AiFillHeart,
 } from "react-icons/ai";
-
-import { FaRegCommentDots }
-from "react-icons/fa";
 
 function Explore({ trips = [] }) {
 
@@ -54,89 +45,91 @@ function Explore({ trips = [] }) {
   const [activeMenuId, setActiveMenuId] =
     useState(null);
 
-  const [commentText,
-  setCommentText] =
-  useState({});
-
-const [showComments,
-  setShowComments] =
-  useState({});
-
   useEffect(() => {
+
     setLocalTrips(trips);
+
   }, [trips]);
 
-  const filteredTrips = localTrips.filter((trip) => {
+  const filteredTrips =
+    localTrips.filter((trip) => {
 
-    const matchesType =
-      selectedType === "All" ||
-      trip.type === selectedType;
+      const matchesType =
 
-    const matchesSearch =
-      trip.title
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase());
+        selectedType === "All" ||
 
-    const matchesBudget =
-      selectedBudget === "All" ||
+        trip.type === selectedType;
 
-      (selectedBudget === "3000" &&
-        trip.budget <= 3000) ||
+      const matchesSearch =
 
-      (selectedBudget === "5000" &&
-        trip.budget <= 5000) ||
+        trip.title
+          ?.toLowerCase()
+          .includes(
+            searchTerm.toLowerCase()
+          );
 
-      (selectedBudget === "7000" &&
-        trip.budget <= 7000) ||
+      const matchesBudget =
 
-      (selectedBudget === "10000" &&
-        trip.budget <= 10000) ||
+        selectedBudget === "All" ||
 
-      (selectedBudget === "15000" &&
-        trip.budget <= 15000);
+        (selectedBudget === "3000" &&
+          trip.budget <= 3000) ||
 
-    return (
-      matchesType &&
-      matchesSearch &&
-      matchesBudget
-    );
+        (selectedBudget === "5000" &&
+          trip.budget <= 5000) ||
 
-  });
+        (selectedBudget === "10000" &&
+          trip.budget <= 10000);
 
-  const handleLogout = async () => {
-
-    await logout();
-
-    navigate("/");
-
-  };
-
-  const handleDelete = async (id) => {
-
-    try {
-
-      await axios.delete(
-        `https://triptales-1-pb97.onrender.com/api/trips/${id}`
+      return (
+        matchesType &&
+        matchesSearch &&
+        matchesBudget
       );
 
-      const updatedTrips =
-        localTrips.filter(
-          (trip) => trip._id !== id
+    });
+
+  const handleLogout =
+    async () => {
+
+      await logout();
+
+      navigate("/");
+
+    };
+
+  const handleDelete =
+    async (id) => {
+
+      try {
+
+        await axios.delete(
+
+          `https://triptales-1-pb97.onrender.com/api/trips/${id}`
+
         );
 
-      setLocalTrips(updatedTrips);
+        const updatedTrips =
+          localTrips.filter(
+            (trip) =>
+              trip._id !== id
+          );
 
-      alert("Trip Deleted 🗑");
+        setLocalTrips(
+          updatedTrips
+        );
 
-    } catch (error) {
+        alert(
+          "Trip Deleted 🗑"
+        );
 
-      console.log(error);
+      } catch (error) {
 
-      alert("Delete Failed ❌");
+        console.log(error);
 
-    }
+      }
 
-  };
+    };
 
   return (
 
@@ -145,33 +138,46 @@ const [showComments,
       {/* Navbar */}
       <nav className="flex items-center justify-between px-6 md:px-10 py-6">
 
-        <h1 className="text-4xl font-bold text-purple-700">
+        <h1 className="text-4xl font-bold text-[#1f1f1f]">
+
           TripTales
+
         </h1>
 
         <div className="flex items-center gap-4 relative">
 
-          {/* Create Post */}
           <button
             onClick={() =>
               navigate("/create-post")
             }
-            className="bg-white/50 backdrop-blur-lg px-6 py-3 rounded-full shadow-lg hover:scale-105 transition-all duration-300 font-semibold"
+            className="bg-black text-white px-6 py-3 rounded-full shadow-lg"
           >
 
-            Create Post
+            Create
 
           </button>
 
-          {/* Profile */}
           <div
             onClick={() =>
               setShowMenu(!showMenu)
             }
-            className="w-12 h-12 rounded-full bg-gradient-to-r from-fuchsia-500 to-purple-600 shadow-lg cursor-pointer hover:scale-105 transition-all duration-300"
-          ></div>
+            className="w-12 h-12 rounded-full overflow-hidden cursor-pointer"
+          >
 
-          {/* Dropdown */}
+            <img
+              src={
+                auth.currentUser?.photoURL ||
+
+                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              }
+
+              alt="profile"
+
+              className="w-full h-full object-cover"
+            />
+
+          </div>
+
           {showMenu && (
 
             <div className="absolute top-16 right-0 w-56 bg-white rounded-3xl shadow-2xl overflow-hidden z-50">
@@ -180,52 +186,19 @@ const [showComments,
                 onClick={() =>
                   navigate("/profile")
                 }
-                className="w-full text-left px-6 py-4 hover:bg-purple-100 transition-all duration-200"
+                className="w-full text-left px-6 py-4 hover:bg-pink-50"
               >
 
-                👤 My Profile
-
-              </button>
-
-              <button
-                onClick={() =>
-                  navigate("/settings")
-                }
-                className="w-full text-left px-6 py-4 hover:bg-purple-100 transition-all duration-200"
-              >
-
-                ⚙ Settings
-
-              </button>
-
-              <button
-                onClick={() =>
-                  navigate("/help")
-                }
-                className="w-full text-left px-6 py-4 hover:bg-purple-100 transition-all duration-200"
-              >
-
-                ❓ Help
-
-              </button>
-
-              <button
-                onClick={() =>
-                  navigate("/about")
-                }
-                className="w-full text-left px-6 py-4 hover:bg-purple-100 transition-all duration-200"
-              >
-
-                ℹ About Us
+                My Profile
 
               </button>
 
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-6 py-4 text-red-500 hover:bg-red-100 transition-all duration-200"
+                className="w-full text-left px-6 py-4 text-red-500 hover:bg-red-50"
               >
 
-                🚪 Logout
+                Logout
 
               </button>
 
@@ -238,48 +211,43 @@ const [showComments,
       </nav>
 
       {/* Hero */}
-      <section className="text-center mt-10 px-4">
+      <section className="text-center mt-6 px-4">
 
-        <h2 className="text-5xl md:text-7xl font-bold text-gray-800 leading-tight">
+        <h2 className="text-5xl md:text-6xl font-bold text-[#1f1f1f]">
 
-          Discover journeys
+          Discover dreamy
           <br />
-          shared by travelers.
+          travel stories ✨
 
         </h2>
-
-        <p className="text-gray-600 mt-6 text-xl">
-
-          Real itineraries, real budgets,
-          real experiences.
-
-        </p>
 
       </section>
 
       {/* Filters */}
-      <div className="max-w-6xl mx-auto mt-12 bg-white/40 backdrop-blur-xl rounded-[40px] shadow-2xl p-8">
+      <div className="max-w-6xl mx-auto mt-10 bg-white/60 backdrop-blur-xl rounded-[35px] shadow-xl p-5">
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-4">
 
-          {/* Search */}
           <input
             type="text"
             placeholder="Search destination..."
             value={searchTerm}
             onChange={(e) =>
-              setSearchTerm(e.target.value)
+              setSearchTerm(
+                e.target.value
+              )
             }
-            className="p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
+            className="p-4 rounded-2xl bg-white outline-none"
           />
 
-          {/* Type */}
           <select
             value={selectedType}
             onChange={(e) =>
-              setSelectedType(e.target.value)
+              setSelectedType(
+                e.target.value
+              )
             }
-            className="p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
+            className="p-4 rounded-2xl bg-white outline-none"
           >
 
             <option value="All">
@@ -291,7 +259,7 @@ const [showComments,
             </option>
 
             <option value="Group">
-              Friends / Group
+              Group
             </option>
 
             <option value="Family">
@@ -300,13 +268,14 @@ const [showComments,
 
           </select>
 
-          {/* Budget */}
           <select
             value={selectedBudget}
             onChange={(e) =>
-              setSelectedBudget(e.target.value)
+              setSelectedBudget(
+                e.target.value
+              )
             }
-            className="p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
+            className="p-4 rounded-2xl bg-white outline-none"
           >
 
             <option value="All">
@@ -314,23 +283,15 @@ const [showComments,
             </option>
 
             <option value="3000">
-              Under ₹3,000
+              Under ₹3k
             </option>
 
             <option value="5000">
-              Under ₹5,000
-            </option>
-
-            <option value="7000">
-              Under ₹7,000
+              Under ₹5k
             </option>
 
             <option value="10000">
-              Under ₹10,000
-            </option>
-
-            <option value="15000">
-              Under ₹15,000
+              Under ₹10k
             </option>
 
           </select>
@@ -340,13 +301,14 @@ const [showComments,
       </div>
 
       {/* Trips */}
-      <section className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-6 md:px-10 mt-16">
+      <section className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-6 md:px-10 mt-14">
 
         {filteredTrips.length > 0 ? (
 
           filteredTrips.map((trip) => {
 
             const isOwner =
+
               trip.userId ===
               auth.currentUser?.uid;
 
@@ -354,13 +316,7 @@ const [showComments,
 
               <div
                 key={trip._id}
-                onClick={() =>
-    navigate(
-      `/itinerary/${trip._id}`
-    )
-  }
-
-                className="bg-white/70 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-2xl hover:scale-[1.02] transition-all duration-300"
+                className="bg-white/70 backdrop-blur-xl rounded-[32px] overflow-hidden shadow-xl"
               >
 
                 {/* Image */}
@@ -373,55 +329,57 @@ const [showComments,
                 {/* Content */}
                 <div className="p-5">
 
-                  {/* User Info */}
-                  <div className="flex items-center justify-between mb-4">
+                  {/* User */}
+                  <div className="flex items-center gap-3">
 
-                    <div className="flex items-center gap-3">
+                    <img
+                      src={
+                        trip.userPhoto ||
 
-                      <img
-                        src={
-                          trip.userPhoto ||
-                          "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                        }
-                        alt="user"
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
+                        "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                      }
 
-                      <div>
+                      alt="user"
 
-                        <p className="font-semibold text-gray-800">
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
 
-                          {trip.userName || "Anonymous"}
+                    <div>
 
-                        </p>
+                      <p className="font-semibold text-sm">
 
-                        <p className="text-sm text-gray-500">
+                        {trip.userName ||
+                          "Traveler"}
 
-                          Trip Creator
+                      </p>
 
-                        </p>
+                      <p className="text-xs text-gray-500">
 
-                      </div>
+                        {trip.type} Traveler
+
+                      </p>
 
                     </div>
 
                   </div>
 
-                  <h2 className="text-3xl font-bold text-gray-800">
+                  {/* Title */}
+                  <h2 className="text-2xl font-bold mt-4">
 
                     {trip.title}
 
                   </h2>
 
-                  <div className="flex items-center justify-between mt-5">
+                  {/* Budget */}
+                  <div className="flex items-center justify-between mt-4">
 
-                    <p className="text-gray-600 text-lg">
+                    <p className="text-gray-500 text-sm">
 
-                      {trip.type}
+                      Budget
 
                     </p>
 
-                    <p className="text-gray-700 text-xl font-semibold">
+                    <p className="font-bold text-lg">
 
                       {trip.displayBudget}
 
@@ -430,103 +388,123 @@ const [showComments,
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center justify-between mt-8">
+                  <div className="flex items-center justify-between mt-5">
 
+                    {/* View */}
                     <button
                       onClick={() =>
                         navigate(
                           `/itinerary/${trip._id}`
                         )
                       }
-                      className="bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white px-6 py-3 rounded-3xl font-semibold shadow-xl hover:scale-105 transition-all duration-300"
+                      className="bg-black text-white px-5 py-3 rounded-2xl"
                     >
 
-                      View Trip
+                      View Itinerary
 
                     </button>
 
+                    {/* Menu */}
                     <div className="relative">
 
-                      {/* Three Dots */}
                       <button
-                      onClick={(e) => {
-                        e.stopPropagation();
+
+                        onClick={(e) => {
+
+                          e.stopPropagation();
 
                           setActiveMenuId(
-                           activeMenuId === trip._id
+
+                            activeMenuId ===
+                            trip._id
+
                               ? null
-                            : trip._id
-                       );
 
-}}
+                              : trip._id
 
-                        className="bg-white/60 px-4 py-2 rounded-2xl text-2xl shadow-lg hover:scale-105 transition-all duration-300"
+                          );
+
+                        }}
+
+                        className="bg-white p-3 rounded-2xl shadow-lg"
                       >
 
-                        <FiMoreVertical size={20} />
+                        <FiMoreVertical
+                          size={20}
+                        />
 
                       </button>
 
-                      {/* Dropdown */}
-                      {activeMenuId === trip._id && (
+                      {activeMenuId ===
+                        trip._id && (
 
-                        <div className="absolute right-0 bottom-14 w-48 bg-white rounded-2xl shadow-2xl overflow-hidden z-50">
+                        <div className="absolute right-0 top-14 w-52 bg-white rounded-3xl shadow-2xl overflow-hidden z-50">
 
-                          {/* OWNER MENU */}
                           {isOwner ? (
 
                             <>
 
                               <button
-                                onClick={() =>
-                                  navigate(
-                                    `/itinerary/${trip._id}`
-                                  )
-                                }
-                                className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
-                              >
-
-                                <FiEye />
-                                 View
-
-                              </button>
-
-                              <button
-                                className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
+                                className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
                               >
 
                                 <FiEdit />
-Edit
+
+                                Edit
 
                               </button>
 
                               <button
-                                className="w-full text-left px-5 py-4 hover:bg-yellow-100 transition-all duration-200"
+                                className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
                               >
 
                                 <FiArchive />
-Archive
+
+                                Archive
 
                               </button>
 
                               <button
-                                className="w-full text-left px-5 py-4 hover:bg-green-100 transition-all duration-200"
+
+                                onClick={(e) => {
+
+                                  e.stopPropagation();
+
+                                  const tripUrl =
+
+                                    `${window.location.origin}/itinerary/${trip._id}`;
+
+                                  navigator.clipboard.writeText(
+                                    tripUrl
+                                  );
+
+                                  alert(
+                                    "Trip link copied!"
+                                  );
+
+                                }}
+
+                                className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
                               >
 
                                 <FiShare2 />
-Share
+
+                                Share
 
                               </button>
 
                               <button
                                 onClick={() =>
-                                  handleDelete(trip._id)
+                                  handleDelete(
+                                    trip._id
+                                  )
                                 }
-                                className="w-full text-left px-5 py-4 text-red-500 hover:bg-red-100 transition-all duration-200"
+                                className="flex items-center gap-3 w-full px-5 py-4 text-red-500 hover:bg-red-50"
                               >
 
                                 <FiTrash2 />
-Delete
+
+                                Delete
 
                               </button>
 
@@ -536,274 +514,241 @@ Delete
 
                             <>
 
+                              {/* Like */}
                               <button
-                                onClick={() =>
-                                  navigate(
-                                    `/itinerary/${trip._id}`
-                                  )
-                                }
-                                className="w-full text-left px-5 py-4 hover:bg-purple-100 transition-all duration-200"
+
+                                onClick={async (e) => {
+
+                                  e.stopPropagation();
+
+                                  try {
+
+                                    await axios.put(
+
+                                      `https://triptales-1-pb97.onrender.com/api/trips/like/${trip._id}`,
+
+                                      {
+                                        userId:
+                                          auth.currentUser?.uid,
+                                      }
+
+                                    );
+
+                                    const updatedTrips =
+
+                                      localTrips.map((t) => {
+
+                                        if (
+                                          t._id ===
+                                          trip._id
+                                        ) {
+
+                                          const alreadyLiked =
+
+                                            t.likes?.includes(
+                                              auth.currentUser?.uid
+                                            );
+
+                                          return {
+
+                                            ...t,
+
+                                            likes:
+                                              alreadyLiked
+
+                                                ? t.likes.filter(
+                                                    (id) =>
+                                                      id !==
+                                                      auth.currentUser?.uid
+                                                  )
+
+                                                : [
+                                                    ...(t.likes || []),
+
+                                                    auth.currentUser?.uid,
+                                                  ],
+
+                                          };
+
+                                        }
+
+                                        return t;
+
+                                      });
+
+                                    setLocalTrips(
+                                      updatedTrips
+                                    );
+
+                                  } catch (error) {
+
+                                    console.log(error);
+
+                                  }
+
+                                }}
+
+                                className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
                               >
 
-                              
+                                <AiFillHeart
+
+                                  className={
+
+                                    trip.likes?.includes(
+                                      auth.currentUser?.uid
+                                    )
+
+                                      ? "text-red-500"
+
+                                      : "text-black"
+
+                                  }
+
+                                />
+
+                                {trip.likes?.includes(
+                                  auth.currentUser?.uid
+                                )
+
+                                  ? "Liked"
+
+                                  : "Like"}
 
                               </button>
 
-                             <button
+                              {/* Save */}
+                              <button
 
-  onClick={async (e) => {
+                                onClick={async (e) => {
 
-    e.stopPropagation();
+                                  e.stopPropagation();
 
-    try {
+                                  try {
 
-      await axios.put(
+                                    await axios.put(
 
-        `https://triptales-1-pb97.onrender.com/api/trips/like/${trip._id}`,
+                                      `https://triptales-1-pb97.onrender.com/api/trips/save/${trip._id}`,
 
-        {
-          userId:
-            auth.currentUser?.uid,
-        }
+                                      {
+                                        userId:
+                                          auth.currentUser?.uid,
+                                      }
 
-      );
+                                    );
 
-      const updatedTrips =
-        localTrips.map((t) => {
+                                    const updatedTrips =
 
-          if (
-            t._id === trip._id
-          ) {
+                                      localTrips.map((t) => {
 
-            const alreadyLiked =
-              t.likes?.includes(
-                auth.currentUser?.uid
-              );
+                                        if (
+                                          t._id ===
+                                          trip._id
+                                        ) {
 
-            return {
+                                          const alreadySaved =
 
-              ...t,
+                                            t.savedBy?.includes(
+                                              auth.currentUser?.uid
+                                            );
 
-              likes:
-                alreadyLiked
+                                          return {
 
-                  ? t.likes.filter(
-                      (id) =>
-                        id !==
-                        auth.currentUser?.uid
-                    )
+                                            ...t,
 
-                  : [
-                      ...(t.likes ||
-                        []),
+                                            savedBy:
+                                              alreadySaved
 
-                      auth.currentUser
-                        ?.uid,
-                    ],
+                                                ? t.savedBy.filter(
+                                                    (id) =>
+                                                      id !==
+                                                      auth.currentUser?.uid
+                                                  )
 
-            };
+                                                : [
+                                                    ...(t.savedBy || []),
 
-          }
+                                                    auth.currentUser?.uid,
+                                                  ],
 
-          return t;
+                                          };
 
-        });
+                                        }
 
-      setLocalTrips(
-        updatedTrips
-      );
+                                        return t;
 
-    } catch (error) {
+                                      });
 
-      console.log(error);
+                                    setLocalTrips(
+                                      updatedTrips
+                                    );
 
-    }
+                                  } catch (error) {
 
-  }}
+                                    console.log(error);
 
-  className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
->
+                                  }
 
-  <AiFillHeart
+                                }}
 
-  className={
+                                className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
+                              >
 
-    trip.likes?.includes(
-      auth.currentUser?.uid
-    )
+                                <FiBookmark
 
-      ? "text-red-500"
+                                  className={
 
-      : "text-black"
+                                    trip.savedBy?.includes(
+                                      auth.currentUser?.uid
+                                    )
 
-  }
+                                      ? "text-pink-500"
 
-/>
+                                      : "text-black"
 
-  {trip.likes?.includes(
-    auth.currentUser?.uid
-  )
+                                  }
 
-    ? "Liked"
+                                />
 
-    : "Like"}
+                                {trip.savedBy?.includes(
+                                  auth.currentUser?.uid
+                                )
 
-</button>
+                                  ? "Saved"
 
-                  <button
+                                  : "Save"}
 
-  onClick={async (e) => {
+                              </button>
 
-    e.stopPropagation();
+                              {/* Share */}
+                              <button
 
-    try {
+                                onClick={(e) => {
 
-      await axios.put(
+                                  e.stopPropagation();
 
-        `https://triptales-1-pb97.onrender.com/api/trips/save/${trip._id}`,
+                                  const tripUrl =
 
-        {
-          userId:
-            auth.currentUser?.uid,
-        }
+                                    `${window.location.origin}/itinerary/${trip._id}`;
 
-      );
+                                  navigator.clipboard.writeText(
+                                    tripUrl
+                                  );
 
-      const updatedTrips =
-        localTrips.map((t) => {
+                                  alert(
+                                    "Trip link copied!"
+                                  );
 
-          if (
-            t._id === trip._id
-          ) {
+                                }}
 
-            const alreadySaved =
-              t.savedBy?.includes(
-                auth.currentUser?.uid
-              );
+                                className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
+                              >
 
-            return {
+                                <FiShare2 />
 
-              ...t,
+                                Share
 
-              savedBy:
-                alreadySaved
-
-                  ? t.savedBy.filter(
-                      (id) =>
-                        id !==
-                        auth.currentUser?.uid
-                    )
-
-                  : [
-                      ...(t.savedBy ||
-                        []),
-
-                      auth.currentUser
-                        ?.uid,
-                    ],
-
-            };
-
-          }
-
-          return t;
-
-        });
-
-      setLocalTrips(
-        updatedTrips
-      );
-
-    } catch (error) {
-
-      console.log(error);
-
-    }
-
-  }}
-
-  className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
->
-
-  <FiBookmark
-
-  className={
-
-    trip.savedBy?.includes(
-      auth.currentUser?.uid
-    )
-
-      ? "text-pink-500"
-
-      : "text-black"
-
-  }
-
-/>
-
-  {trip.savedBy?.includes(
-    auth.currentUser?.uid
-  )
-
-    ? "Saved"
-
-    : "Save"}
-
-</button>          
-
-<button
-
-  onClick={(e) => {
-
-    e.stopPropagation();
-
-    const tripUrl =
-
-      `${window.location.origin}/itinerary/${trip._id}`;
-
-    navigator.clipboard.writeText(
-      tripUrl
-    );
-
-    alert(
-      "Trip link copied!"
-    );
-
-  }}
-
-  className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
->
-
-  <FiShare2 />
-
-  Share
-
-</button>
-<button
-
-  onClick={(e) => {
-
-    e.stopPropagation();
-
-    setShowComments((prev) => ({
-
-      ...prev,
-
-      [trip._id]:
-        !prev[trip._id],
-
-    }));
-
-  }}
-
-  className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
->
-
-  <FaRegCommentDots />
-
-  Comment
-
-</button>
+                              </button>
 
                             </>
 
@@ -827,9 +772,9 @@ Delete
 
         ) : (
 
-          <div className="col-span-full flex items-center justify-center text-4xl font-bold text-purple-700 mt-20">
+          <div className="col-span-full text-center text-3xl font-bold text-pink-400 mt-20">
 
-            No Trips Found 😔
+            No Trips Found ✨
 
           </div>
 
