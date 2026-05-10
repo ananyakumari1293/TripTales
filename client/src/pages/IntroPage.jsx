@@ -4,145 +4,187 @@ function IntroPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#f7f1f3] text-[#2d2a26] overflow-hidden relative">
-
-      {/* SOFT TEXTURE BACKGROUND */}
-      <div className="absolute inset-0 opacity-40 pointer-events-none">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#f2d7e1] rounded-full blur-[140px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#eadfe4] rounded-full blur-[140px]" />
-      </div>
+    <div className="min-h-screen bg-[#f6edef] text-[#1e1b1d] overflow-hidden">
 
       {/* NAVBAR */}
-      <nav className="relative z-10 flex items-center justify-between px-8 md:px-16 py-8">
+      <nav className="w-full flex items-center justify-between px-6 md:px-16 py-8">
 
-        <h1 className="text-2xl tracking-[0.35em] font-light">
-          TRIPTALES
+        <h1 className="text-4xl font-bold tracking-tight">
+          TripTales
         </h1>
 
-        <div className="hidden md:flex items-center gap-10 text-[15px] text-[#5e5853]">
-          <p className="cursor-pointer hover:text-black transition">
+        <div className="hidden md:flex items-center gap-10 text-[16px] text-[#5f575b]">
+
+          <p className="hover:text-black transition cursor-pointer">
             Home
           </p>
 
-          <p className="cursor-pointer hover:text-black transition">
+          <p className="hover:text-black transition cursor-pointer">
             Explore
           </p>
 
-          <p className="cursor-pointer hover:text-black transition">
+          <p className="hover:text-black transition cursor-pointer">
             Stories
           </p>
 
-          <p className="cursor-pointer hover:text-black transition">
+          <p className="hover:text-black transition cursor-pointer">
             Community
           </p>
+
         </div>
 
       </nav>
 
-      {/* HERO SECTION */}
-      <section className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-24 pb-32">
+      {/* HERO */}
+      <section className="max-w-7xl mx-auto px-6 md:px-16 pt-10 pb-24 grid md:grid-cols-2 gap-16 items-center">
 
-        <div className="max-w-5xl">
+        {/* LEFT SIDE */}
+        <div>
 
-          <p className="uppercase tracking-[0.4em] text-sm text-[#8b7d74] mb-8">
+          <p className="uppercase tracking-[0.3em] text-[12px] text-[#9c7f89] mb-8">
             discover meaningful travel
           </p>
 
-          <h1 className="text-6xl md:text-8xl leading-[0.95] font-light tracking-tight text-[#2d2926]">
+          <h1 className="text-6xl md:text-8xl leading-[0.95] font-bold text-[#1d1a1b]">
 
             Travel
-            <span className="italic font-serif text-[#8f6f79]">
+            <span className="italic font-serif text-[#b07c8d] font-normal">
               {" "}beautifully
             </span>
 
             <br />
 
-            with stories that feel real.
+            with stories
+            <br />
+
+            that feel real.
 
           </h1>
 
-          <p className="mt-10 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed text-[#5f5853]">
+          <p className="mt-10 text-[18px] leading-[1.9] text-[#5f575b] max-w-xl">
 
-            TripTales helps travelers discover cozy places,
-            hidden experiences, peaceful stays, and authentic
-            journeys shared by real people around the world.
+            Discover cozy places, peaceful stays, hidden cafés,
+            dreamy sunsets, and authentic journeys shared by real travelers.
 
           </p>
 
-          {/* BUTTON */}
-          <button
-            onClick={() => navigate("/login")}
-            className="group mt-14 bg-black text-white px-8 py-4 rounded-2xl flex items-center gap-3 mx-auto hover:scale-[1.02] transition-all duration-300 shadow-xl"
-          >
+          <div className="flex items-center gap-5 mt-12">
 
-            <span className="text-[15px] tracking-wide">
+            <button
+              onClick={() => navigate("/login")}
+              className="bg-black text-white px-8 py-4 rounded-2xl text-[15px] hover:scale-[1.02] transition-all duration-300 shadow-xl"
+            >
               Get Started
-            </span>
+            </button>
 
-            <span className="group-hover:translate-x-1 transition">
-              →
-            </span>
+            <button
+              className="bg-white text-[#2a2527] border border-[#eadce0] px-8 py-4 rounded-2xl text-[15px] hover:bg-[#fff8fa] transition-all duration-300 shadow-md"
+            >
+              Join Community
+            </button>
 
-          </button>
+          </div>
+
+        </div>
+
+        {/* RIGHT SIDE */}
+        <div className="relative h-[600px] hidden md:block">
+
+          {/* MAIN BIG CARD */}
+          <div className="absolute top-0 right-0 w-[340px] h-[440px] rounded-[40px] bg-gradient-to-br from-[#efdbe2] to-[#e8d1d9] shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-8">
+
+            <div className="w-full h-[260px] rounded-[30px] bg-[#f8eef1]" />
+
+            <p className="mt-8 uppercase tracking-[0.25em] text-[11px] text-[#8d727c]">
+              curated journeys
+            </p>
+
+            <h2 className="mt-3 text-3xl leading-tight text-[#2a2526]">
+
+              Explore moments
+              <span className="italic font-serif text-[#a67686]">
+                {" "}beautifully.
+              </span>
+
+            </h2>
+
+          </div>
+
+          {/* SMALL CARD */}
+          <div className="absolute bottom-0 left-0 w-[260px] rounded-[35px] bg-white p-7 shadow-[0_20px_50px_rgba(0,0,0,0.07)]">
+
+            <div className="w-14 h-14 rounded-2xl bg-[#f2dbe2] mb-6" />
+
+            <p className="uppercase tracking-[0.25em] text-[11px] text-[#8f7981]">
+              real experiences
+            </p>
+
+            <p className="mt-5 leading-[1.8] text-[#595255]">
+
+              Find places and stories shared by people
+              who genuinely experienced them.
+
+            </p>
+
+          </div>
 
         </div>
 
       </section>
 
-      {/* ABOUT SECTION */}
-      <section className="relative z-10 px-6 md:px-16 pb-28">
+      {/* SECOND SECTION */}
+      <section className="max-w-6xl mx-auto px-6 md:px-16 pb-24">
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
+        <div className="grid md:grid-cols-2 gap-10">
 
-          <div className="bg-white/60 backdrop-blur-xl border border-white/40 rounded-[40px] p-10 shadow-[0_10px_60px_rgba(0,0,0,0.04)]">
+          {/* CARD 1 */}
+          <div className="bg-white rounded-[35px] p-10 shadow-[0_15px_40px_rgba(0,0,0,0.05)] border border-[#f1e4e8]">
 
-            <p className="text-sm uppercase tracking-[0.3em] text-[#9b8a81] mb-6">
-              Why TripTales
+            <p className="uppercase tracking-[0.3em] text-[12px] text-[#a0818b]">
+              why triptales
             </p>
 
-            <h2 className="text-4xl leading-tight font-light text-[#2d2926]">
+            <h2 className="mt-6 text-4xl leading-tight font-semibold text-[#211d1f]">
 
               Not just another
-              travel platform.
+              <span className="italic font-serif text-[#ab7787]">
+                {" "}travel platform.
+              </span>
 
             </h2>
 
-            <p className="mt-8 text-[17px] leading-relaxed text-[#5d5651]">
+            <p className="mt-8 text-[17px] leading-[1.9] text-[#5f575b]">
 
-              We wanted travel to feel softer, calmer,
-              and more personal again.
-
-              Instead of crowded guides and unrealistic
-              recommendations, TripTales focuses on real
-              experiences shared by people who genuinely
-              explored a place.
+              TripTales is made for travelers who want experiences
+              that feel calm, personal, and meaningful instead of loud,
+              crowded, and artificial.
 
             </p>
 
           </div>
 
-          <div className="bg-[#efe4e8] rounded-[40px] p-10 shadow-[0_10px_60px_rgba(0,0,0,0.03)]">
+          {/* CARD 2 */}
+          <div className="bg-[#f2e4e8] rounded-[35px] p-10 shadow-[0_15px_40px_rgba(0,0,0,0.04)]">
 
-            <p className="text-sm uppercase tracking-[0.3em] text-[#907d85] mb-6">
-              Community
+            <p className="uppercase tracking-[0.3em] text-[12px] text-[#9c7e88]">
+              community
             </p>
 
-            <h2 className="text-4xl leading-tight font-light text-[#2d2926]">
+            <h2 className="mt-6 text-4xl leading-tight font-semibold text-[#211d1f]">
 
               Built for people
-              who love meaningful journeys.
+              who travel
+              <span className="italic font-serif text-[#ab7787]">
+                {" "}differently.
+              </span>
 
             </h2>
 
-            <p className="mt-8 text-[17px] leading-relaxed text-[#5d5651]">
+            <p className="mt-8 text-[17px] leading-[1.9] text-[#5f575b]">
 
-              From peaceful cafés and mountain towns
-              to spontaneous solo trips and dreamy stays,
-              every story on TripTales carries a memory
-              worth sharing.
-
-              Explore experiences that feel human,
-              comforting, and authentic.
+              Discover hidden cafés, peaceful mountain towns,
+              dreamy sunsets, and unforgettable memories shared
+              by real travelers around the world.
 
             </p>
 
@@ -152,41 +194,36 @@ function IntroPage() {
 
       </section>
 
-      {/* FINAL CTA */}
-      <section className="relative z-10 px-6 md:px-16 pb-24">
+      {/* CTA */}
+      <section className="px-6 md:px-16 pb-28">
 
-        <div className="max-w-6xl mx-auto rounded-[50px] bg-[#1d1b19] text-white py-20 px-10 md:px-20 text-center overflow-hidden relative">
+        <div className="max-w-6xl mx-auto bg-[#1d1a1b] rounded-[45px] py-20 px-8 md:px-20 text-center text-white">
 
-          <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-gradient-to-br from-pink-200 to-transparent" />
+          <p className="uppercase tracking-[0.3em] text-[12px] text-[#d1b6c0]">
+            start your journey
+          </p>
 
-          <h2 className="text-5xl md:text-6xl leading-tight font-light">
+          <h2 className="mt-6 text-5xl md:text-6xl leading-tight font-bold">
 
-            Start collecting
-            stories worth remembering.
+            Collect memories
+            <span className="italic font-serif text-[#d9b3c0] font-normal">
+              {" "}beautifully.
+            </span>
 
           </h2>
 
-          <p className="mt-8 text-lg text-[#d1cbc7] max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-8 max-w-2xl mx-auto text-[#d6c8cd] text-lg leading-[1.9]">
 
-            Join a growing community of travelers
-            discovering places through emotion,
-            experience, and real human connection.
+            Join a growing community discovering places through
+            emotion, comfort, and real experiences.
 
           </p>
 
           <button
             onClick={() => navigate("/login")}
-            className="group mt-12 bg-white text-black px-8 py-4 rounded-2xl flex items-center gap-3 mx-auto hover:scale-[1.02] transition-all duration-300"
+            className="mt-12 bg-white text-black px-10 py-4 rounded-2xl hover:scale-[1.02] transition-all duration-300 shadow-xl"
           >
-
-            <span className="text-[15px] tracking-wide">
-              Join Our Community
-            </span>
-
-            <span className="group-hover:translate-x-1 transition">
-              →
-            </span>
-
+            Join Community
           </button>
 
         </div>
