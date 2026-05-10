@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
-
 import { auth } from "../firebase";
-
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 
 function Profile({ trips = [] }) {
@@ -36,9 +33,13 @@ function Profile({ trips = [] }) {
   /* FETCH USER */
   useEffect(() => {
 
-    fetchUser();
+    if (currentUser?.uid) {
 
-  }, []);
+      fetchUser();
+
+    }
+
+  }, [currentUser]);
 
   const fetchUser =
     async () => {
@@ -48,7 +49,7 @@ function Profile({ trips = [] }) {
         const response =
           await axios.get(
 
-            `https://triptales-1-pb97.onrender.com/api/users/${currentUser?.uid}`
+            `https://triptales-1-pb97.onrender.com/api/users/${currentUser.uid}`
 
           );
 
@@ -72,7 +73,7 @@ function Profile({ trips = [] }) {
 
     };
 
-  /* USER POSTS */
+  /* POSTS */
   const myTrips = trips.filter(
     (trip) =>
       trip.userId === currentUser?.uid
@@ -94,7 +95,7 @@ function Profile({ trips = [] }) {
       )
   );
 
-  /* ACTIVE DATA */
+  /* ACTIVE TAB */
   const activeTrips =
 
     activeTab === "posts"
@@ -107,6 +108,58 @@ function Profile({ trips = [] }) {
 
       : likedTrips;
 
+  /* SAVE PROFILE */
+  const handleSaveProfile =
+    async () => {
+
+      try {
+
+        const response =
+          await axios.put(
+
+            `https://triptales-1-pb97.onrender.com/api/users/update/${currentUser.uid}`,
+
+            {
+
+              username:
+                username.trim(),
+
+              bio:
+                bio.trim(),
+
+              profilePhoto:
+                userData?.profilePhoto || "",
+
+            }
+
+          );
+
+        setUserData(
+          response.data
+        );
+
+        setEditMode(false);
+
+        alert(
+          "Profile Updated ✨"
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+        alert(
+
+          error.response?.data?.message ||
+
+          "Profile update failed"
+
+        );
+
+      }
+
+    };
+
   return (
 
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 p-6">
@@ -114,9 +167,9 @@ function Profile({ trips = [] }) {
       {/* PROFILE CARD */}
       <div className="max-w-5xl mx-auto bg-white/40 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
 
-        <div className="flex flex-col md:flex-row items-center gap-6">
+        <div className="flex flex-col md:flex-row items-center gap-8">
 
-          {/* AVATAR */}
+          {/* PROFILE IMAGE */}
           <img
             src={
               userData?.profilePhoto ||
@@ -132,7 +185,7 @@ function Profile({ trips = [] }) {
           />
 
           {/* INFO */}
-          <div className="text-center md:text-left flex-1">
+          <div className="flex-1 text-center md:text-left">
 
             <h1 className="text-4xl font-bold text-purple-700">
 
@@ -218,7 +271,7 @@ function Profile({ trips = [] }) {
                 )
               }
 
-              className="mt-6 bg-black text-white px-6 py-3 rounded-2xl"
+              className="mt-6 bg-black text-white px-6 py-3 rounded-2xl hover:scale-105 transition-all duration-300"
             >
 
               {editMode
@@ -234,6 +287,7 @@ function Profile({ trips = [] }) {
 
               <div className="mt-8 space-y-4">
 
+                {/* USERNAME */}
                 <input
                   type="text"
 
@@ -247,9 +301,10 @@ function Profile({ trips = [] }) {
                     )
                   }
 
-                  className="w-full p-4 rounded-2xl outline-none"
+                  className="w-full p-4 rounded-2xl outline-none shadow-lg"
                 />
 
+                {/* BIO */}
                 <textarea
                   placeholder="Your bio..."
 
@@ -261,54 +316,17 @@ function Profile({ trips = [] }) {
                     )
                   }
 
-                  className="w-full p-4 rounded-2xl outline-none h-32 resize-none"
+                  className="w-full p-4 rounded-2xl outline-none h-32 resize-none shadow-lg"
                 />
 
+                {/* SAVE BUTTON */}
                 <button
 
-                  onClick={async () => {
+                  onClick={
+                    handleSaveProfile
+                  }
 
-                    try {
-
-                      const response =
-                        await axios.put(
-
-                          `https://triptales-1-pb97.onrender.com/api/users/update/${currentUser?.uid}`,
-
-                          {
-
-                            username,
-
-                            bio,
-
-                            profilePhoto:
-                              userData?.profilePhoto,
-
-                          }
-
-                        );
-
-                      setUserData(
-                        response.data
-                      );
-
-                      setEditMode(
-                        false
-                      );
-
-                      alert(
-                        "Profile Updated ✨"
-                      );
-
-                    } catch (error) {
-
-                      console.log(error);
-
-                    }
-
-                  }}
-
-                  className="bg-purple-600 text-white px-6 py-3 rounded-2xl"
+                  className="bg-purple-600 text-white px-6 py-3 rounded-2xl hover:scale-105 transition-all duration-300 shadow-lg"
                 >
 
                   Save Changes
@@ -375,7 +393,7 @@ function Profile({ trips = [] }) {
 
       </div>
 
-      {/* TRIPS GRID */}
+      {/* GRID */}
       <div className="max-w-6xl mx-auto mt-12">
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -417,7 +435,7 @@ function Profile({ trips = [] }) {
 
                   </p>
 
-                  {/* BUTTON */}
+                  {/* VIEW BUTTON */}
                   <button
                     onClick={() =>
                       navigate(
