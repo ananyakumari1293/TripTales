@@ -387,8 +387,15 @@ function Explore({ trips = [] }) {
 
                       <p className="font-semibold text-sm">
 
-                        {trip.userName ||
-                          "Traveler"}
+                        {trip.userId === auth.currentUser?.uid
+
+  ? userData?.username ||
+
+    "Traveler"
+
+  : trip.userName ||
+
+    "Traveler"}
 
                       </p>
 
