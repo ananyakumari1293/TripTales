@@ -69,6 +69,60 @@ router.delete("/:id", async (req, res) => {
 
 });
 router.put(
+  "/archive/:id",
+
+  async (req, res) => {
+
+    try {
+
+      const trip =
+        await Trip.findById(
+          req.params.id
+        );
+
+      if (!trip) {
+
+        return res.status(404).json({
+
+          message:
+            "Trip not found",
+
+        });
+
+      }
+
+      trip.isArchived =
+        !trip.isArchived;
+
+      await trip.save();
+
+      res.status(200).json({
+
+        message:
+          trip.isArchived
+
+            ? "Trip archived"
+
+            : "Trip restored",
+
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+
+        message:
+          "Archive failed",
+
+      });
+
+    }
+
+  }
+);
+router.put(
   "/like/:id",
 
   async (req, res) => {

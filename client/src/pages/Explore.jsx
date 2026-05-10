@@ -50,41 +50,55 @@ function Explore({ trips = [] }) {
 
   /* FILTERS */
   const filteredTrips =
-    localTrips.filter((trip) => {
 
-      const matchesType =
+  localTrips.filter((trip) => {
 
-        selectedType === "All" ||
-        trip.type === selectedType;
+    /* HIDE ARCHIVED */
+    if (trip.isArchived) {
 
-      const matchesSearch =
+      return false;
 
-        trip.title
-          ?.toLowerCase()
-          .includes(
-            searchTerm.toLowerCase()
-          );
+    }
 
-      const matchesBudget =
+    const matchesType =
 
-        selectedBudget === "All" ||
+      selectedType === "All" ||
 
-        (selectedBudget === "3000" &&
-          trip.budget <= 3000) ||
+      trip.type ===
+        selectedType;
 
-        (selectedBudget === "5000" &&
-          trip.budget <= 5000) ||
+    const matchesSearch =
 
-        (selectedBudget === "10000" &&
-          trip.budget <= 10000);
+      trip.title
+        ?.toLowerCase()
+        .includes(
+          searchTerm.toLowerCase()
+        );
 
-      return (
-        matchesType &&
-        matchesSearch &&
-        matchesBudget
-      );
+    const matchesBudget =
 
-    });
+      selectedBudget === "All" ||
+
+      (selectedBudget === "3000" &&
+        trip.budget <= 3000) ||
+
+      (selectedBudget === "5000" &&
+        trip.budget <= 5000) ||
+
+      (selectedBudget === "10000" &&
+        trip.budget <= 10000);
+
+    return (
+
+      matchesType &&
+
+      matchesSearch &&
+
+      matchesBudget
+
+    );
+
+  });
 
   /* LOGOUT */
   const handleLogout =
@@ -500,15 +514,75 @@ function Explore({ trips = [] }) {
                               </button>
 
                               {/* ARCHIVE */}
-                              <button
-                                className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
-                              >
+                             <button
 
-                                <FiArchive />
+  onClick={async () => {
 
-                                Archive
+    try {
 
-                              </button>
+      await axios.put(
+
+        `https://triptales-1-pb97.onrender.com/api/trips/archive/${trip._id}`
+
+      );
+
+      const updatedTrips =
+
+        localTrips.map((t) =>
+
+          t._id === trip._id
+
+            ? {
+
+                ...t,
+
+                isArchived:
+                  !t.isArchived,
+
+              }
+
+            : t
+
+        );
+
+      setLocalTrips(
+        updatedTrips
+      );
+
+      alert(
+
+        trip.isArchived
+
+          ? "Trip Restored ✨"
+
+          : "Trip Archived 📦"
+
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+      alert(
+        "Archive failed"
+      );
+
+    }
+
+  }}
+
+  className="flex items-center gap-3 w-full px-5 py-4 hover:bg-pink-50"
+>
+
+  <FiArchive />
+
+  {trip.isArchived
+
+    ? "Restore"
+
+    : "Archive"}
+
+</button>
 
                               {/* SHARE */}
                               <button
@@ -570,20 +644,35 @@ function Explore({ trips = [] }) {
                               </button>
 
                               {/* DELETE */}
-                              <button
-                                onClick={() =>
-                                  handleDelete(
-                                    trip._id
-                                  )
-                                }
-                                className="flex items-center gap-3 w-full px-5 py-4 text-red-500 hover:bg-red-50"
-                              >
+<button
 
-                                <FiTrash2 />
+  onClick={() => {
 
-                                Delete
+    const confirmDelete =
+      window.confirm(
 
-                              </button>
+        "Are you sure you want to permanently delete this trip? 😔"
+
+      );
+
+    if (confirmDelete) {
+
+      handleDelete(
+        trip._id
+      );
+
+    }
+
+  }}
+
+  className="flex items-center gap-3 w-full px-5 py-4 text-red-500 hover:bg-red-50"
+>
+
+  <FiTrash2 />
+
+  Delete
+
+</button>
 
                             </>
 
