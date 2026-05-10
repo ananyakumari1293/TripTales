@@ -7,16 +7,21 @@ function IntroPage() {
     <div className="min-h-screen bg-[#f6edef] text-[#1e1b1d] overflow-hidden">
 
       {/* NAVBAR */}
-      <nav className="w-full px-6 md:px-16 py-8">
+      <nav className="w-full px-6 md:px-16 py-10">
 
-        <h1 className="text-4xl font-bold tracking-tight">
-          TripTales
+        <h1 className="text-5xl md:text-6xl font-black tracking-tight text-[#1d1a1b]">
+
+          Trip
+          <span className="italic font-serif text-[#b07c8d] font-normal">
+            Tales
+          </span>
+
         </h1>
 
       </nav>
 
       {/* HERO SECTION */}
-      <section className="max-w-7xl mx-auto px-6 md:px-16 pt-10 pb-24 grid md:grid-cols-2 gap-16 items-center">
+      <section className="max-w-7xl mx-auto px-6 md:px-16 pt-4 pb-24 grid md:grid-cols-2 gap-16 items-center">
 
         {/* LEFT SIDE */}
         <div>
@@ -48,6 +53,7 @@ function IntroPage() {
 
           </p>
 
+          {/* BUTTON */}
           <div className="mt-12">
 
             <button
@@ -64,10 +70,10 @@ function IntroPage() {
         {/* RIGHT SIDE */}
         <div className="relative h-[600px] hidden md:block">
 
-          {/* MAIN CARD */}
-          <div className="absolute top-0 right-0 w-[340px] h-[440px] rounded-[40px] bg-gradient-to-br from-[#efdbe2] to-[#e8d1d9] shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-8 hover:-translate-y-2 transition-all duration-500">
+          {/* BIG CARD */}
+          <div className="absolute top-0 right-0 w-[360px] h-[470px] rounded-[40px] bg-gradient-to-br from-[#efdbe2] to-[#e8d1d9] shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-8">
 
-            <div className="w-full h-[260px] rounded-[30px] bg-[#f8eef1]" />
+            <div className="w-full h-[280px] rounded-[30px] bg-[#f8eef1]" />
 
             <p className="mt-8 uppercase tracking-[0.25em] text-[11px] text-[#8d727c]">
               curated journeys
@@ -84,8 +90,8 @@ function IntroPage() {
 
           </div>
 
-          {/* SMALL CARD */}
-          <div className="absolute bottom-0 left-0 w-[260px] rounded-[35px] bg-white p-7 shadow-[0_20px_50px_rgba(0,0,0,0.07)]">
+          {/* FLOATING CARD */}
+          <div className="absolute bottom-10 left-0 w-[260px] rounded-[35px] bg-white p-7 shadow-[0_20px_50px_rgba(0,0,0,0.07)]">
 
             <div className="w-14 h-14 rounded-2xl bg-[#f2dbe2] mb-6" />
 
