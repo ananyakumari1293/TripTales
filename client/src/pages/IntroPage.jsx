@@ -1,18 +1,20 @@
 import { useNavigate } from "react-router-dom";
 
 function IntroPage() {
+
   const navigate = useNavigate();
 
   return (
+
     <div className="min-h-screen bg-[#f6edef] text-[#1e1b1d] overflow-hidden">
 
       {/* NAVBAR */}
       <nav className="w-full px-6 md:px-16 py-10">
 
-        <h1 className="text-5xl md:text-6xl font-black tracking-tight text-[#1d1a1b]">
+        <h1 className="text-6xl md:text-7xl font-extrabold tracking-[-0.04em] text-[#1d1a1b]">
 
           Trip
-          <span className="italic font-serif text-[#b07c8d] font-normal">
+          <span className="text-[#b07c8d] ml-1">
             Tales
           </span>
 
@@ -21,19 +23,21 @@ function IntroPage() {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="max-w-7xl mx-auto px-6 md:px-16 pt-4 pb-24 grid md:grid-cols-2 gap-16 items-center">
+      <section className="max-w-7xl mx-auto px-6 md:px-16 pt-4 pb-28 grid md:grid-cols-2 gap-20 items-center">
 
         {/* LEFT SIDE */}
         <div>
 
-          <p className="uppercase tracking-[0.3em] text-[12px] text-[#9c7f89] mb-8">
+          <p className="uppercase tracking-[0.35em] text-[12px] text-[#9c7f89] mb-8">
+
             discover meaningful travel
+
           </p>
 
-          <h1 className="text-6xl md:text-8xl leading-[0.95] font-bold text-[#1d1a1b]">
+          <h1 className="text-6xl md:text-8xl leading-[0.92] font-bold text-[#1d1a1b]">
 
             Travel
-            <span className="italic font-serif text-[#b07c8d] font-normal">
+            <span className="text-[#b07c8d] font-medium">
               {" "}beautifully
             </span>
 
@@ -46,10 +50,16 @@ function IntroPage() {
 
           </h1>
 
-          <p className="mt-10 text-[18px] leading-[1.9] text-[#5f575b] max-w-xl">
+          <p className="mt-10 text-[18px] leading-[2] text-[#5f575b] max-w-xl">
 
-            Discover cozy places, peaceful stays, hidden cafés,
-            dreamy sunsets, and authentic journeys shared by real travelers.
+            Some journeys become photographs.
+
+            The special ones become memories you carry forever.
+
+            Discover peaceful cafés, dreamy sunsets,
+            hidden mountain towns, quiet roads,
+            and emotional stories shared by travelers
+            who truly lived those moments.
 
           </p>
 
@@ -58,9 +68,11 @@ function IntroPage() {
 
             <button
               onClick={() => navigate("/login")}
-              className="bg-black text-white px-8 py-4 rounded-2xl text-[15px] hover:scale-[1.02] transition-all duration-300 shadow-xl"
+              className="bg-black text-white px-9 py-4 rounded-2xl text-[15px] hover:scale-[1.03] transition-all duration-300 shadow-xl"
             >
+
               Get Started
+
             </button>
 
           </div>
@@ -68,41 +80,46 @@ function IntroPage() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="relative h-[600px] hidden md:block">
+        <div className="relative h-[620px] hidden md:block">
 
-          {/* BIG CARD */}
-          <div className="absolute top-0 right-0 w-[360px] h-[470px] rounded-[40px] bg-gradient-to-br from-[#efdbe2] to-[#e8d1d9] shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-8">
+          {/* MAIN CARD */}
+          <div className="absolute top-0 right-0 w-[380px] h-[500px] rounded-[45px] bg-gradient-to-br from-[#efdbe2] to-[#e8d1d9] shadow-[0_25px_70px_rgba(0,0,0,0.08)] p-8">
 
-            <div className="w-full h-[280px] rounded-[30px] bg-[#f8eef1]" />
+            <div className="w-full h-[300px] rounded-[35px] bg-[#f8eef1]" />
 
-            <p className="mt-8 uppercase tracking-[0.25em] text-[11px] text-[#8d727c]">
+            <p className="mt-8 uppercase tracking-[0.28em] text-[11px] text-[#8d727c]">
+
               curated journeys
+
             </p>
 
-            <h2 className="mt-3 text-3xl leading-tight text-[#2a2526]">
+            <h2 className="mt-4 text-3xl leading-tight text-[#2a2526] font-semibold">
 
-              Explore moments
-              <span className="italic font-serif text-[#a67686]">
-                {" "}beautifully.
-              </span>
+              Places that stay
+              with you forever.
 
             </h2>
 
           </div>
 
           {/* FLOATING CARD */}
-          <div className="absolute bottom-10 left-0 w-[260px] rounded-[35px] bg-white p-7 shadow-[0_20px_50px_rgba(0,0,0,0.07)]">
+          <div className="absolute bottom-10 left-0 w-[270px] rounded-[35px] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.07)]">
 
-            <div className="w-14 h-14 rounded-2xl bg-[#f2dbe2] mb-6" />
+            <div className="w-16 h-16 rounded-2xl bg-[#f2dbe2] mb-6" />
 
-            <p className="uppercase tracking-[0.25em] text-[11px] text-[#8f7981]">
+            <p className="uppercase tracking-[0.28em] text-[11px] text-[#8f7981]">
+
               real experiences
+
             </p>
 
-            <p className="mt-5 leading-[1.8] text-[#595255]">
+            <p className="mt-5 leading-[1.9] text-[#595255]">
 
-              Find places and stories shared by people
-              who genuinely experienced them.
+              Every memory holds a feeling —
+              the laughter, the sunsets,
+              the silence, the people,
+              and the little moments
+              that unexpectedly become unforgettable.
 
             </p>
 
@@ -118,53 +135,56 @@ function IntroPage() {
         <div className="grid md:grid-cols-2 gap-10">
 
           {/* CARD 1 */}
-          <div className="bg-white rounded-[35px] p-10 shadow-[0_15px_40px_rgba(0,0,0,0.05)] border border-[#f1e4e8]">
+          <div className="bg-white rounded-[38px] p-10 shadow-[0_15px_45px_rgba(0,0,0,0.05)] border border-[#f1e4e8]">
 
             <p className="uppercase tracking-[0.3em] text-[12px] text-[#a0818b]">
+
               why triptales
+
             </p>
 
             <h2 className="mt-6 text-4xl leading-tight font-semibold text-[#211d1f]">
 
-              Not just another
-              <span className="italic font-serif text-[#ab7787]">
-                {" "}travel platform.
-              </span>
+              Travel is more than
+              just destinations.
 
             </h2>
 
-            <p className="mt-8 text-[17px] leading-[1.9] text-[#5f575b]">
+            <p className="mt-8 text-[17px] leading-[2] text-[#5f575b]">
 
-              TripTales is made for travelers who want experiences
-              that feel calm, personal, and meaningful instead of loud,
-              crowded, and artificial.
+              It’s the warmth of a tiny café on a rainy evening,
+              the comfort of a quiet stay after a long journey,
+              and the memories attached to places
+              you never expected to miss.
+
+              TripTales is built to preserve those feelings.
 
             </p>
 
           </div>
 
           {/* CARD 2 */}
-          <div className="bg-[#f2e4e8] rounded-[35px] p-10 shadow-[0_15px_40px_rgba(0,0,0,0.04)]">
+          <div className="bg-[#f2e4e8] rounded-[38px] p-10 shadow-[0_15px_45px_rgba(0,0,0,0.04)]">
 
             <p className="uppercase tracking-[0.3em] text-[12px] text-[#9c7e88]">
+
               community
+
             </p>
 
             <h2 className="mt-6 text-4xl leading-tight font-semibold text-[#211d1f]">
 
-              Built for people
-              who travel
-              <span className="italic font-serif text-[#ab7787]">
-                {" "}differently.
-              </span>
+              Stories that feel
+              personal and human.
 
             </h2>
 
-            <p className="mt-8 text-[17px] leading-[1.9] text-[#5f575b]">
+            <p className="mt-8 text-[17px] leading-[2] text-[#5f575b]">
 
-              Discover hidden cafés, peaceful mountain towns,
-              dreamy sunsets, and unforgettable memories shared
-              by real travelers around the world.
+              From hidden cafés and peaceful mountain towns
+              to spontaneous late-night adventures,
+              discover emotional travel experiences
+              shared by people around the world.
 
             </p>
 
@@ -175,43 +195,69 @@ function IntroPage() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="px-6 md:px-16 pb-28">
+      <section className="px-6 md:px-16 pb-20">
 
-        <div className="max-w-6xl mx-auto bg-[#1d1a1b] rounded-[45px] py-20 px-8 md:px-20 text-center text-white">
+        <div className="max-w-6xl mx-auto bg-[#1d1a1b] rounded-[50px] py-24 px-8 md:px-20 text-center text-white shadow-[0_25px_80px_rgba(0,0,0,0.15)]">
 
-          <p className="uppercase tracking-[0.3em] text-[12px] text-[#d1b6c0]">
+          <p className="uppercase tracking-[0.35em] text-[12px] text-[#d1b6c0]">
+
             start your journey
+
           </p>
 
-          <h2 className="mt-6 text-5xl md:text-6xl leading-tight font-bold">
+          <h2 className="mt-6 text-5xl md:text-7xl leading-tight font-bold">
 
             Collect memories
-            <span className="italic font-serif text-[#d9b3c0] font-normal">
+            <span className="text-[#d9b3c0] font-medium">
               {" "}beautifully.
             </span>
 
           </h2>
 
-          <p className="mt-8 max-w-2xl mx-auto text-[#d6c8cd] text-lg leading-[1.9]">
+          <p className="mt-10 max-w-3xl mx-auto text-[#d6c8cd] text-lg leading-[2]">
 
-            Join a growing community discovering places through
-            emotion, comfort, and real experiences.
+            The best journeys are never remembered
+            only through pictures.
+
+            They stay in the emotions,
+            the people you met,
+            the sunsets you watched quietly,
+            and the memories that continue
+            long after the trip ends.
 
           </p>
 
           <button
             onClick={() => navigate("/login")}
-            className="mt-12 bg-white text-black px-10 py-4 rounded-2xl hover:scale-[1.02] transition-all duration-300 shadow-xl"
+            className="mt-14 bg-white text-black px-10 py-4 rounded-2xl hover:scale-[1.03] transition-all duration-300 shadow-xl text-[15px] font-medium"
           >
+
             Join Community
+
           </button>
 
         </div>
 
       </section>
 
+      {/* FOOTER */}
+      <div className="pb-10 text-center">
+
+        <p className="text-[#8e7b82] text-sm tracking-[0.18em]">
+
+          made with ♡ by
+          <span className="text-[#b07c8d] ml-2 font-medium">
+            Ananya
+          </span>
+
+        </p>
+
+      </div>
+
     </div>
+
   );
+
 }
 
 export default IntroPage;
