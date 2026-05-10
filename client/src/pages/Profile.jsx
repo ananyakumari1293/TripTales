@@ -3,6 +3,12 @@ import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import {
+  FiEdit2,
+  FiArchive,
+  FiRefreshCcw,
+} from "react-icons/fi";
+
 function Profile({ trips = [] }) {
 
   const navigate = useNavigate();
@@ -29,32 +35,29 @@ function Profile({ trips = [] }) {
   const [bio,
     setBio] =
     useState("");
-    const [editingTrip,
-  setEditingTrip] =
-  useState(null);
 
-const [editTitle,
-  setEditTitle] =
-  useState("");
+  const [editingTrip,
+    setEditingTrip] =
+    useState(null);
 
-const [editType,
-  setEditType] =
-  useState("");
+  const [editTitle,
+    setEditTitle] =
+    useState("");
 
-const [editBudget,
-  setEditBudget] =
-  useState("");
+  const [editType,
+    setEditType] =
+    useState("");
+
+  const [editBudget,
+    setEditBudget] =
+    useState("");
 
   /* FETCH USER */
   useEffect(() => {
 
     if (currentUser?.uid) {
 
-      
-
-        fetchUser();
-
-    
+      fetchUser();
 
     }
 
@@ -92,13 +95,12 @@ const [editBudget,
 
     };
 
-  /* POSTS */
+  /* FILTERS */
   const myTrips = trips.filter(
     (trip) =>
       trip.userId === currentUser?.uid
   );
 
-  /* SAVED */
   const savedTrips = trips.filter(
     (trip) =>
       trip.savedBy?.includes(
@@ -106,7 +108,6 @@ const [editBudget,
       )
   );
 
-  /* LIKED */
   const likedTrips = trips.filter(
     (trip) =>
       trip.likes?.includes(
@@ -114,7 +115,6 @@ const [editBudget,
       )
   );
 
-  /* ACTIVE TAB */
   const activeTrips =
 
     activeTab === "posts"
@@ -167,14 +167,6 @@ const [editBudget,
 
         console.log(error);
 
-        alert(
-
-          error.response?.data?.message ||
-
-          "Profile update failed"
-
-        );
-
       }
 
     };
@@ -183,12 +175,12 @@ const [editBudget,
 
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 p-6">
 
-      {/* PROFILE CARD */}
+      {/* PROFILE */}
       <div className="max-w-5xl mx-auto bg-white/40 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
 
         <div className="flex flex-col md:flex-row items-center gap-8">
 
-          {/* PROFILE IMAGE */}
+          {/* IMAGE */}
           <img
             src={
               userData?.profilePhoto ||
@@ -229,7 +221,7 @@ const [editBudget,
             </p>
 
             {/* STATS */}
-            <div className="flex flex-wrap gap-6 mt-6 justify-center md:justify-start">
+            <div className="flex gap-6 mt-6 flex-wrap">
 
               <div className="bg-white/50 px-6 py-3 rounded-2xl shadow-lg">
 
@@ -239,11 +231,7 @@ const [editBudget,
 
                 </p>
 
-                <p className="text-gray-600">
-
-                  Posts
-
-                </p>
+                <p>Posts</p>
 
               </div>
 
@@ -255,11 +243,7 @@ const [editBudget,
 
                 </p>
 
-                <p className="text-gray-600">
-
-                  Saved
-
-                </p>
+                <p>Saved</p>
 
               </div>
 
@@ -271,17 +255,13 @@ const [editBudget,
 
                 </p>
 
-                <p className="text-gray-600">
-
-                  Liked
-
-                </p>
+                <p>Liked</p>
 
               </div>
 
             </div>
 
-            {/* EDIT BUTTON */}
+            {/* PROFILE EDIT */}
             <button
 
               onClick={() =>
@@ -290,7 +270,7 @@ const [editBudget,
                 )
               }
 
-              className="mt-6 bg-black text-white px-6 py-3 rounded-2xl hover:scale-105 transition-all duration-300"
+              className="mt-6 bg-black text-white px-6 py-3 rounded-2xl"
             >
 
               {editMode
@@ -304,13 +284,10 @@ const [editBudget,
             {/* EDIT FORM */}
             {editMode && (
 
-              <div className="mt-8 space-y-4">
+              <div className="mt-6 space-y-4">
 
-                {/* USERNAME */}
                 <input
                   type="text"
-
-                  placeholder="Username"
 
                   value={username}
 
@@ -320,13 +297,12 @@ const [editBudget,
                     )
                   }
 
-                  className="w-full p-4 rounded-2xl outline-none shadow-lg"
+                  placeholder="Username"
+
+                  className="w-full p-4 rounded-2xl outline-none"
                 />
 
-                {/* BIO */}
                 <textarea
-                  placeholder="Your bio..."
-
                   value={bio}
 
                   onChange={(e) =>
@@ -335,17 +311,18 @@ const [editBudget,
                     )
                   }
 
-                  className="w-full p-4 rounded-2xl outline-none h-32 resize-none shadow-lg"
+                  placeholder="Bio"
+
+                  className="w-full p-4 rounded-2xl outline-none h-32"
                 />
 
-                {/* SAVE BUTTON */}
                 <button
 
                   onClick={
                     handleSaveProfile
                   }
 
-                  className="bg-purple-600 text-white px-6 py-3 rounded-2xl hover:scale-105 transition-all duration-300 shadow-lg"
+                  className="bg-purple-600 text-white px-6 py-3 rounded-2xl"
                 >
 
                   Save Changes
@@ -363,15 +340,17 @@ const [editBudget,
       </div>
 
       {/* TABS */}
-      <div className="max-w-6xl mx-auto mt-10 flex flex-wrap gap-4">
+      <div className="max-w-6xl mx-auto mt-10 flex gap-4">
 
         <button
           onClick={() =>
             setActiveTab("posts")
           }
-          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
+          className={`px-6 py-3 rounded-2xl ${
             activeTab === "posts"
+
               ? "bg-black text-white"
+
               : "bg-white"
           }`}
         >
@@ -384,9 +363,11 @@ const [editBudget,
           onClick={() =>
             setActiveTab("saved")
           }
-          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
+          className={`px-6 py-3 rounded-2xl ${
             activeTab === "saved"
+
               ? "bg-black text-white"
+
               : "bg-white"
           }`}
         >
@@ -399,9 +380,11 @@ const [editBudget,
           onClick={() =>
             setActiveTab("liked")
           }
-          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
+          className={`px-6 py-3 rounded-2xl ${
             activeTab === "liked"
+
               ? "bg-black text-white"
+
               : "bg-white"
           }`}
         >
@@ -412,7 +395,7 @@ const [editBudget,
 
       </div>
 
-      {/* GRID */}
+      {/* TRIPS */}
       <div className="max-w-6xl mx-auto mt-12">
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -426,14 +409,12 @@ const [editBudget,
                 className="bg-white/40 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl"
               >
 
-                {/* IMAGE */}
                 <img
                   src={trip.image}
                   alt={trip.title}
                   className="w-full h-56 object-cover"
                 />
 
-                {/* CONTENT */}
                 <div className="p-6">
 
                   <h3 className="text-2xl font-bold text-gray-800">
@@ -453,87 +434,96 @@ const [editBudget,
                     {trip.displayBudget}
 
                   </p>
-                  <div className="flex justify-end mb-4">
 
-  
+                  {/* ACTIONS */}
+                  <div className="flex gap-3 mt-5">
 
-</div>
-<div className="flex gap-3 mb-4">
+                    {/* EDIT */}
+                    <button
 
-  {/* EDIT */}
-  <button
+                      onClick={() => {
 
-    onClick={() => {
+                        setEditingTrip(
+                          trip
+                        );
 
-      setEditingTrip(
-        trip
-      );
+                        setEditTitle(
+                          trip.title
+                        );
 
-      setEditTitle(
-        trip.title
-      );
+                        setEditType(
+                          trip.type
+                        );
 
-      setEditType(
-        trip.type
-      );
+                        setEditBudget(
+                          trip.displayBudget
+                        );
 
-      setEditBudget(
-        trip.displayBudget
-      );
+                      }}
 
-    }}
+                      className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl"
+                    >
 
-    className="bg-black text-white px-4 py-2 rounded-xl"
-  >
+                      <FiEdit2 />
 
-    Edit ✏️
+                      Edit
 
-  </button>
+                    </button>
 
-  {/* ARCHIVE */}
-  <button
+                    {/* ARCHIVE */}
+                    <button
 
-    onClick={async () => {
+                      onClick={async () => {
 
-      try {
+                        try {
 
-        await axios.put(
+                          await axios.put(
 
-          `https://triptales-1-pb97.onrender.com/api/trips/archive/${trip._id}`
+                            `https://triptales-1-pb97.onrender.com/api/trips/archive/${trip._id}`
 
-        );
+                          );
 
-        window.location.reload();
+                          window.location.reload();
 
-      } catch (error) {
+                        } catch (error) {
 
-        console.log(error);
+                          console.log(error);
 
-      }
+                        }
 
-    }}
+                      }}
 
-    className="bg-white px-4 py-2 rounded-xl shadow-md"
-  >
+                      className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-md"
+                    >
 
-    {trip.isArchived
+                      {trip.isArchived ? (
 
-      ? "Restore ♻️"
+                        <>
+                          <FiRefreshCcw />
+                          Restore
+                        </>
 
-      : "Archive 📦"}
+                      ) : (
 
-  </button>
+                        <>
+                          <FiArchive />
+                          Archive
+                        </>
 
-</div>
+                      )}
 
-                  {/* VIEW BUTTON */}
+                    </button>
+
+                  </div>
+
+                  {/* VIEW */}
                   <button
                     onClick={() =>
                       navigate(
                         `/itinerary/${trip._id}`
                       )
                     }
-                    className="mt-5 w-full bg-black text-white py-3 rounded-2xl hover:scale-[1.02] transition-all duration-300"
+                    className="mt-5 w-full bg-black text-white py-3 rounded-2xl"
                   >
 
                     View Itinerary
@@ -560,136 +550,124 @@ const [editBudget,
 
       </div>
 
-    
-    {/* EDIT MODAL */}
-{editingTrip && (
+      {/* EDIT MODAL */}
+      {editingTrip && (
 
-  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-    <div className="bg-white p-8 rounded-3xl w-[90%] max-w-lg space-y-5">
+          <div className="bg-white p-8 rounded-3xl w-[90%] max-w-lg space-y-5">
 
-      <h2 className="text-3xl font-bold">
+            <h2 className="text-3xl font-bold">
 
-        Edit Trip ✨
+              Edit Trip ✨
 
-      </h2>
+            </h2>
 
-      {/* TITLE */}
-      <input
-        type="text"
+            <input
+              type="text"
+              value={editTitle}
+              onChange={(e) =>
+                setEditTitle(
+                  e.target.value
+                )
+              }
+              className="w-full p-4 rounded-2xl border outline-none"
+            />
 
-        value={editTitle}
+            <input
+              type="text"
+              value={editType}
+              onChange={(e) =>
+                setEditType(
+                  e.target.value
+                )
+              }
+              className="w-full p-4 rounded-2xl border outline-none"
+            />
 
-        onChange={(e) =>
-          setEditTitle(
-            e.target.value
-          )
-        }
+            <input
+              type="text"
+              value={editBudget}
+              onChange={(e) =>
+                setEditBudget(
+                  e.target.value
+                )
+              }
+              className="w-full p-4 rounded-2xl border outline-none"
+            />
 
-        className="w-full p-4 rounded-2xl border outline-none"
-      />
+            <div className="flex gap-4">
 
-      {/* TYPE */}
-      <input
-        type="text"
+              <button
 
-        value={editType}
+                onClick={async () => {
 
-        onChange={(e) =>
-          setEditType(
-            e.target.value
-          )
-        }
+                  try {
 
-        className="w-full p-4 rounded-2xl border outline-none"
-      />
+                    await axios.put(
 
-      {/* BUDGET */}
-      <input
-        type="text"
+                      `https://triptales-1-pb97.onrender.com/api/trips/edit/${editingTrip._id}`,
 
-        value={editBudget}
+                      {
 
-        onChange={(e) =>
-          setEditBudget(
-            e.target.value
-          )
-        }
+                        title:
+                          editTitle,
 
-        className="w-full p-4 rounded-2xl border outline-none"
-      />
+                        type:
+                          editType,
 
-      {/* BUTTONS */}
-      <div className="flex gap-4">
+                        displayBudget:
+                          editBudget,
 
-        <button
+                      }
 
-          onClick={async () => {
+                    );
 
-            try {
+                    alert(
+                      "Trip Updated ✨"
+                    );
 
-              await axios.put(
+                    window.location.reload();
 
-                `https://triptales-1-pb97.onrender.com/api/trips/edit/${editingTrip._id}`,
+                  } catch (error) {
 
-                {
+                    console.log(error);
 
-                  title:
-                    editTitle,
+                  }
 
-                  type:
-                    editType,
+                }}
 
-                  displayBudget:
-                    editBudget,
+                className="flex-1 bg-purple-600 text-white py-3 rounded-2xl"
+              >
 
+                Save
+
+              </button>
+
+              <button
+
+                onClick={() =>
+                  setEditingTrip(
+                    null
+                  )
                 }
 
-              );
+                className="flex-1 bg-gray-200 py-3 rounded-2xl"
+              >
 
-              alert(
-                "Trip Updated ✨"
-              );
+                Cancel
 
-              window.location.reload();
+              </button>
 
-            } catch (error) {
+            </div>
 
-              console.log(error);
+          </div>
 
-            }
+        </div>
 
-          }}
-
-          className="flex-1 bg-purple-600 text-white py-3 rounded-2xl"
-        >
-
-          Save
-
-        </button>
-
-        <button
-
-          onClick={() =>
-            setEditingTrip(
-              null
-            )
-          }
-
-          className="flex-1 bg-gray-200 py-3 rounded-2xl"
-        >
-
-          Cancel
-
-        </button>
-
-      </div>
+      )}
 
     </div>
-
-  </div>
-
-)}
 
   );
 
