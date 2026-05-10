@@ -19,9 +19,13 @@ router.post("/", async (req, res) => {
 
     if (existingUser) {
 
-      return res.json(existingUser);
+      return res.status(200).json(existingUser);
 
     }
+    console.log(
+  "Creating user:",
+  req.body
+);
 
     const user =
       new User(req.body);

@@ -33,6 +33,7 @@ function Login() {
   const [loading, setLoading] =
     useState(false);
 
+  /* GOOGLE LOGIN */
   const handleGoogleLogin = async () => {
 
     try {
@@ -47,20 +48,30 @@ function Login() {
 
       const user = result.user;
 
+      /* SAVE USER TO DATABASE */
       await axios.post(
+
         "https://triptales-1-pb97.onrender.com/api/users",
+
         {
-          firebaseUid: user.uid,
+
+          firebaseUid:
+            user.uid,
 
           username:
             user.displayName ||
             "TripTales User",
 
-          email: user.email,
+          email:
+            user.email,
 
           profilePhoto:
             user.photoURL || "",
+
+          bio: "",
+
         }
+
       );
 
       navigate("/explore");
@@ -79,6 +90,7 @@ function Login() {
 
   };
 
+  /* LOGIN + SIGNUP */
   const handleAuth = async () => {
 
     if (!email || !password) {
@@ -95,41 +107,95 @@ function Login() {
 
       let result;
 
+      /* SIGNUP */
       if (isSignup) {
 
         result =
           await createUserWithEmailAndPassword(
+
             auth,
+
             email,
+
             password
+
           );
 
-        const user = result.user;
+        const user =
+          result.user;
 
+        /* SAVE USER */
         await axios.post(
+
           "https://triptales-1-pb97.onrender.com/api/users",
+
           {
-            firebaseUid: user.uid,
+
+            firebaseUid:
+              user.uid,
 
             username:
               email.split("@")[0],
 
-            email: user.email,
+            email:
+              user.email,
 
             profilePhoto: "",
+
+            bio: "",
+
           }
+
         );
 
         alert(
           "Account Created Successfully 🎉"
         );
 
-      } else {
+      }
 
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
+      /* LOGIN */
+      else {
+
+        result =
+          await signInWithEmailAndPassword(
+
+            auth,
+
+            email,
+
+            password
+
+          );
+
+        const user =
+          result.user;
+
+        /* CREATE USER IF NOT EXISTS */
+        await axios.post(
+
+          "https://triptales-1-pb97.onrender.com/api/users",
+
+          {
+
+            firebaseUid:
+              user.uid,
+
+            username:
+              user.displayName ||
+
+              email.split("@")[0],
+
+            email:
+              user.email,
+
+            profilePhoto:
+              user.photoURL || "",
+
+            bio: "",
+
+          }
+
         );
 
         alert(
@@ -142,7 +208,7 @@ function Login() {
 
     } catch (error) {
 
-      console.log(error.message);
+      console.log(error);
 
       alert(error.message);
 
@@ -154,6 +220,7 @@ function Login() {
 
   };
 
+  /* FORGOT PASSWORD */
   const handleForgotPassword =
     async () => {
 
@@ -194,7 +261,7 @@ function Login() {
 
       <div className="w-full max-w-lg bg-white/40 backdrop-blur-lg rounded-[30px] shadow-2xl p-8">
 
-        {/* Heading */}
+        {/* HEADING */}
         <div className="text-center">
 
           <h1 className="text-5xl font-bold text-purple-700">
@@ -211,21 +278,27 @@ function Login() {
 
         </div>
 
-        {/* Form */}
+        {/* FORM */}
         <div className="mt-10 space-y-5">
 
-          {/* Email */}
+          {/* EMAIL */}
           <input
             type="email"
+
             placeholder="Email Address"
+
             value={email}
+
             onChange={(e) =>
-              setEmail(e.target.value)
+              setEmail(
+                e.target.value
+              )
             }
+
             className="w-full p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
           />
 
-          {/* Password */}
+          {/* PASSWORD */}
           <div className="relative">
 
             <input
@@ -234,21 +307,29 @@ function Login() {
                   ? "text"
                   : "password"
               }
+
               placeholder="Password"
+
               value={password}
+
               onChange={(e) =>
-                setPassword(e.target.value)
+                setPassword(
+                  e.target.value
+                )
               }
+
               className="w-full p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
             />
 
             <button
               type="button"
+
               onClick={() =>
                 setShowPassword(
                   !showPassword
                 )
               }
+
               className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-600"
             >
 
@@ -260,7 +341,7 @@ function Login() {
 
           </div>
 
-          {/* Forgot Password */}
+          {/* FORGOT PASSWORD */}
           {!isSignup && (
 
             <div className="text-right">
@@ -269,6 +350,7 @@ function Login() {
                 onClick={
                   handleForgotPassword
                 }
+
                 className="text-purple-700 text-sm font-semibold hover:underline"
               >
 
@@ -280,10 +362,12 @@ function Login() {
 
           )}
 
-          {/* Login / Signup Button */}
+          {/* LOGIN BUTTON */}
           <button
             onClick={handleAuth}
+
             disabled={loading}
+
             className="w-full bg-purple-600 hover:bg-purple-700 transition-all duration-300 text-white py-4 rounded-2xl text-lg font-semibold shadow-xl"
           >
 
@@ -295,23 +379,27 @@ function Login() {
 
           </button>
 
-          {/* Divider */}
+          {/* DIVIDER */}
           <div className="flex items-center gap-4">
 
             <div className="flex-1 h-[1px] bg-gray-300"></div>
 
             <p className="text-gray-500">
+
               OR
+
             </p>
 
             <div className="flex-1 h-[1px] bg-gray-300"></div>
 
           </div>
 
-          {/* Google Login */}
+          {/* GOOGLE LOGIN */}
           <button
             onClick={handleGoogleLogin}
+
             disabled={loading}
+
             className="w-full bg-white text-black py-4 rounded-2xl text-lg font-semibold shadow-xl hover:scale-105 transition-all duration-300"
           >
 
@@ -319,7 +407,7 @@ function Login() {
 
           </button>
 
-          {/* Footer */}
+          {/* FOOTER */}
           <p className="text-center text-gray-600 mt-6">
 
             {isSignup
@@ -328,8 +416,11 @@ function Login() {
 
             <span
               onClick={() =>
-                setIsSignup(!isSignup)
+                setIsSignup(
+                  !isSignup
+                )
               }
+
               className="text-purple-700 font-semibold cursor-pointer ml-2"
             >
 

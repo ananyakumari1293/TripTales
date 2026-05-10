@@ -35,7 +35,11 @@ function Profile({ trips = [] }) {
 
     if (currentUser?.uid) {
 
-      fetchUser();
+      setTimeout(() => {
+
+        fetchUser();
+
+      }, 1000);
 
     }
 
