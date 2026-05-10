@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import { auth } from "../firebase";
+
 import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 function Profile({ trips = [] }) {
 
@@ -9,8 +13,64 @@ function Profile({ trips = [] }) {
   const currentUser =
     auth.currentUser;
 
+  /* STATES */
   const [activeTab, setActiveTab] =
     useState("posts");
+
+  const [userData,
+    setUserData] =
+    useState(null);
+
+  const [editMode,
+    setEditMode] =
+    useState(false);
+
+  const [username,
+    setUsername] =
+    useState("");
+
+  const [bio,
+    setBio] =
+    useState("");
+
+  /* FETCH USER */
+  useEffect(() => {
+
+    fetchUser();
+
+  }, []);
+
+  const fetchUser =
+    async () => {
+
+      try {
+
+        const response =
+          await axios.get(
+
+            `https://triptales-1-pb97.onrender.com/api/users/${currentUser?.uid}`
+
+          );
+
+        setUserData(
+          response.data
+        );
+
+        setUsername(
+          response.data?.username || ""
+        );
+
+        setBio(
+          response.data?.bio || ""
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
 
   /* USER POSTS */
   const myTrips = trips.filter(
@@ -59,19 +119,25 @@ function Profile({ trips = [] }) {
           {/* AVATAR */}
           <img
             src={
+              userData?.profilePhoto ||
+
               currentUser?.photoURL ||
+
               "https://cdn-icons-png.flaticon.com/512/149/149071.png"
             }
+
             alt="profile"
+
             className="w-32 h-32 rounded-full object-cover shadow-xl"
           />
 
           {/* INFO */}
-          <div className="text-center md:text-left">
+          <div className="text-center md:text-left flex-1">
 
             <h1 className="text-4xl font-bold text-purple-700">
 
-              {currentUser?.displayName ||
+              {userData?.username ||
+
                 "TripTales User"}
 
             </h1>
@@ -84,7 +150,9 @@ function Profile({ trips = [] }) {
 
             <p className="mt-3 text-gray-600">
 
-              Exploring the world one trip at a time ✨
+              {userData?.bio ||
+
+                "Exploring the world one trip at a time ✨"}
 
             </p>
 
@@ -140,6 +208,116 @@ function Profile({ trips = [] }) {
               </div>
 
             </div>
+
+            {/* EDIT BUTTON */}
+            <button
+
+              onClick={() =>
+                setEditMode(
+                  !editMode
+                )
+              }
+
+              className="mt-6 bg-black text-white px-6 py-3 rounded-2xl"
+            >
+
+              {editMode
+
+                ? "Cancel"
+
+                : "Edit Profile"}
+
+            </button>
+
+            {/* EDIT FORM */}
+            {editMode && (
+
+              <div className="mt-8 space-y-4">
+
+                <input
+                  type="text"
+
+                  placeholder="Username"
+
+                  value={username}
+
+                  onChange={(e) =>
+                    setUsername(
+                      e.target.value
+                    )
+                  }
+
+                  className="w-full p-4 rounded-2xl outline-none"
+                />
+
+                <textarea
+                  placeholder="Your bio..."
+
+                  value={bio}
+
+                  onChange={(e) =>
+                    setBio(
+                      e.target.value
+                    )
+                  }
+
+                  className="w-full p-4 rounded-2xl outline-none h-32 resize-none"
+                />
+
+                <button
+
+                  onClick={async () => {
+
+                    try {
+
+                      const response =
+                        await axios.put(
+
+                          `https://triptales-1-pb97.onrender.com/api/users/update/${currentUser?.uid}`,
+
+                          {
+
+                            username,
+
+                            bio,
+
+                            profilePhoto:
+                              userData?.profilePhoto,
+
+                          }
+
+                        );
+
+                      setUserData(
+                        response.data
+                      );
+
+                      setEditMode(
+                        false
+                      );
+
+                      alert(
+                        "Profile Updated ✨"
+                      );
+
+                    } catch (error) {
+
+                      console.log(error);
+
+                    }
+
+                  }}
+
+                  className="bg-purple-600 text-white px-6 py-3 rounded-2xl"
+                >
+
+                  Save Changes
+
+                </button>
+
+              </div>
+
+            )}
 
           </div>
 
