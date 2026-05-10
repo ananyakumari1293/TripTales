@@ -7,35 +7,15 @@ function IntroPage() {
     <div className="min-h-screen bg-[#f6edef] text-[#1e1b1d] overflow-hidden">
 
       {/* NAVBAR */}
-      <nav className="w-full flex items-center justify-between px-6 md:px-16 py-8">
+      <nav className="w-full px-6 md:px-16 py-8">
 
         <h1 className="text-4xl font-bold tracking-tight">
           TripTales
         </h1>
 
-        <div className="hidden md:flex items-center gap-10 text-[16px] text-[#5f575b]">
-
-          <p className="hover:text-black transition cursor-pointer">
-            Home
-          </p>
-
-          <p className="hover:text-black transition cursor-pointer">
-            Explore
-          </p>
-
-          <p className="hover:text-black transition cursor-pointer">
-            Stories
-          </p>
-
-          <p className="hover:text-black transition cursor-pointer">
-            Community
-          </p>
-
-        </div>
-
       </nav>
 
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section className="max-w-7xl mx-auto px-6 md:px-16 pt-10 pb-24 grid md:grid-cols-2 gap-16 items-center">
 
         {/* LEFT SIDE */}
@@ -68,19 +48,13 @@ function IntroPage() {
 
           </p>
 
-          <div className="flex items-center gap-5 mt-12">
+          <div className="mt-12">
 
             <button
               onClick={() => navigate("/login")}
               className="bg-black text-white px-8 py-4 rounded-2xl text-[15px] hover:scale-[1.02] transition-all duration-300 shadow-xl"
             >
               Get Started
-            </button>
-
-            <button
-              className="bg-white text-[#2a2527] border border-[#eadce0] px-8 py-4 rounded-2xl text-[15px] hover:bg-[#fff8fa] transition-all duration-300 shadow-md"
-            >
-              Join Community
             </button>
 
           </div>
@@ -90,8 +64,8 @@ function IntroPage() {
         {/* RIGHT SIDE */}
         <div className="relative h-[600px] hidden md:block">
 
-          {/* MAIN BIG CARD */}
-          <div className="absolute top-0 right-0 w-[340px] h-[440px] rounded-[40px] bg-gradient-to-br from-[#efdbe2] to-[#e8d1d9] shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-8">
+          {/* MAIN CARD */}
+          <div className="absolute top-0 right-0 w-[340px] h-[440px] rounded-[40px] bg-gradient-to-br from-[#efdbe2] to-[#e8d1d9] shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-8 hover:-translate-y-2 transition-all duration-500">
 
             <div className="w-full h-[260px] rounded-[30px] bg-[#f8eef1]" />
 
@@ -194,7 +168,7 @@ function IntroPage() {
 
       </section>
 
-      {/* CTA */}
+      {/* FINAL CTA */}
       <section className="px-6 md:px-16 pb-28">
 
         <div className="max-w-6xl mx-auto bg-[#1d1a1b] rounded-[45px] py-20 px-8 md:px-20 text-center text-white">
