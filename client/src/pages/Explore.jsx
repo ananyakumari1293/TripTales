@@ -514,7 +514,7 @@ function Explore({ trips = [] }) {
                               </button>
 
                               {/* ARCHIVE */}
-                             <button
+     <button
 
   onClick={async () => {
 
@@ -528,22 +528,24 @@ function Explore({ trips = [] }) {
 
       const updatedTrips =
 
-        localTrips.map((t) =>
+        localTrips.map((t) => {
 
-          t._id === trip._id
+          if (t._id === trip._id) {
 
-            ? {
+            return {
 
-                ...t,
+              ...t,
 
-                isArchived:
-                  !t.isArchived,
+              isArchived:
+                !t.isArchived,
 
-              }
+            };
 
-            : t
+          }
 
-        );
+          return t;
+
+        });
 
       setLocalTrips(
         updatedTrips
@@ -551,11 +553,11 @@ function Explore({ trips = [] }) {
 
       alert(
 
-        trip.isArchived
+        !trip.isArchived
 
-          ? "Trip Restored ✨"
+          ? "Trip Archived 📦"
 
-          : "Trip Archived 📦"
+          : "Trip Restored ✨"
 
       );
 
@@ -582,8 +584,7 @@ function Explore({ trips = [] }) {
 
     : "Archive"}
 
-</button>
-
+</button>                        
                               {/* SHARE */}
                               <button
 
