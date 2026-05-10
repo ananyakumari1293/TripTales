@@ -257,20 +257,23 @@ function Login() {
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#f6edef] px-4">
 
-      <div className="w-full max-w-lg bg-white/40 backdrop-blur-lg rounded-[30px] shadow-2xl p-8">
+      <div className="w-full max-w-lg bg-white/60 backdrop-blur-xl rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-[#f1e4e8] p-10">
 
         {/* HEADING */}
         <div className="text-center">
 
-          <h1 className="text-5xl font-bold text-purple-700">
+          <h1 className="text-6xl font-black tracking-tight text-[#1d1a1b]">
 
-            TripTales
+            Trip
+            <span className="italic font-serif text-[#b07c8d] font-normal">
+              Tales
+            </span>
 
           </h1>
 
-          <p className="text-gray-600 mt-4 text-lg">
+          <p className="text-[#6b6266] mt-5 text-lg leading-relaxed">
 
             Travel through real stories.
 
@@ -295,7 +298,7 @@ function Login() {
               )
             }
 
-            className="w-full p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
+            className="w-full p-5 rounded-2xl bg-[#fbf7f8] border border-[#eadce0] outline-none text-lg text-[#2a2527] placeholder:text-[#9b9094] focus:border-[#b07c8d] transition-all"
           />
 
           {/* PASSWORD */}
@@ -318,7 +321,7 @@ function Login() {
                 )
               }
 
-              className="w-full p-4 rounded-2xl bg-white/60 border border-white/40 outline-none text-lg"
+              className="w-full p-5 rounded-2xl bg-[#fbf7f8] border border-[#eadce0] outline-none text-lg text-[#2a2527] placeholder:text-[#9b9094] focus:border-[#b07c8d] transition-all"
             />
 
             <button
@@ -330,12 +333,12 @@ function Login() {
                 )
               }
 
-              className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-600"
+              className="absolute right-5 top-1/2 -translate-y-1/2 text-[#8f7b82]"
             >
 
               {showPassword
                 ? "🙈"
-                : "👁️"}
+                : "👁"}
 
             </button>
 
@@ -351,7 +354,7 @@ function Login() {
                   handleForgotPassword
                 }
 
-                className="text-purple-700 text-sm font-semibold hover:underline"
+                className="text-[#a67686] text-sm font-semibold hover:underline"
               >
 
                 Forgot Password?
@@ -368,7 +371,7 @@ function Login() {
 
             disabled={loading}
 
-            className="w-full bg-purple-600 hover:bg-purple-700 transition-all duration-300 text-white py-4 rounded-2xl text-lg font-semibold shadow-xl"
+            className="w-full bg-black hover:opacity-90 transition-all duration-300 text-white py-5 rounded-2xl text-lg font-semibold shadow-xl"
           >
 
             {loading
@@ -380,17 +383,17 @@ function Login() {
           </button>
 
           {/* DIVIDER */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 pt-2">
 
-            <div className="flex-1 h-[1px] bg-gray-300"></div>
+            <div className="flex-1 h-[1px] bg-[#ddd1d5]"></div>
 
-            <p className="text-gray-500">
+            <p className="text-[#8f8589] text-sm">
 
               OR
 
             </p>
 
-            <div className="flex-1 h-[1px] bg-gray-300"></div>
+            <div className="flex-1 h-[1px] bg-[#ddd1d5]"></div>
 
           </div>
 
@@ -400,7 +403,7 @@ function Login() {
 
             disabled={loading}
 
-            className="w-full bg-white text-black py-4 rounded-2xl text-lg font-semibold shadow-xl hover:scale-105 transition-all duration-300"
+            className="w-full bg-white text-[#1d1a1b] py-5 rounded-2xl text-lg font-semibold shadow-lg border border-[#eadce0] hover:bg-[#fffafb] transition-all duration-300"
           >
 
             Continue with Google
@@ -408,7 +411,7 @@ function Login() {
           </button>
 
           {/* FOOTER */}
-          <p className="text-center text-gray-600 mt-6">
+          <p className="text-center text-[#6e6669] mt-8">
 
             {isSignup
               ? "Already have an account?"
@@ -421,7 +424,7 @@ function Login() {
                 )
               }
 
-              className="text-purple-700 font-semibold cursor-pointer ml-2"
+              className="text-[#a67686] font-semibold cursor-pointer ml-2 hover:underline"
             >
 
               {isSignup
