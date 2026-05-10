@@ -27,7 +27,7 @@ import Help from "./pages/Help";
 
 import About from "./pages/About";
 import Profile from "./pages/Profile";
-
+import IntroPage from "./pages/IntroPage";
 function App() {
 
   const [trips, setTrips] =
@@ -130,6 +130,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/" element={<IntroPage />} />
         <Route
   path="/profile"
   element={
