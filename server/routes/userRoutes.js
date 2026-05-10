@@ -77,34 +77,38 @@ router.put(
 
     try {
 
-      const updatedUser =
+      const user =
+        await User.findOne({
 
-        await User.findOneAndUpdate(
+          firebaseUid:
+            req.params.firebaseUid,
 
-          {
-            firebaseUid:
-              req.params.firebaseUid,
-          },
+        });
 
-          {
-            username:
-              req.body.username,
+      if (!user) {
 
-            bio:
-              req.body.bio,
+        return res.status(404).json({
 
-            profilePhoto:
-              req.body.profilePhoto,
-          },
+          message:
+            "User not found",
 
-          {
-            new: true,
-          }
+        });
 
-        );
+      }
+
+      user.username =
+        req.body.username;
+
+      user.bio =
+        req.body.bio;
+
+      user.profilePhoto =
+        req.body.profilePhoto;
+
+      await user.save();
 
       res.status(200).json(
-        updatedUser
+        user
       );
 
     } catch (error) {
