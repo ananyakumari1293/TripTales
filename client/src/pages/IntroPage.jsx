@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 
 function IntroPage() {
   const navigate = useNavigate();
@@ -7,7 +6,7 @@ function IntroPage() {
   return (
     <div className="min-h-screen bg-[#f7f1f3] text-[#2d2a26] overflow-hidden relative">
 
-      {/* TEXTURE BACKGROUND */}
+      {/* SOFT TEXTURE BACKGROUND */}
       <div className="absolute inset-0 opacity-40 pointer-events-none">
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#f2d7e1] rounded-full blur-[140px]" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#eadfe4] rounded-full blur-[140px]" />
@@ -37,9 +36,10 @@ function IntroPage() {
             Community
           </p>
         </div>
+
       </nav>
 
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-24 pb-32">
 
         <div className="max-w-5xl">
@@ -79,14 +79,14 @@ function IntroPage() {
               Get Started
             </span>
 
-            <ArrowRight
-              size={18}
-              className="group-hover:translate-x-1 transition"
-            />
+            <span className="group-hover:translate-x-1 transition">
+              →
+            </span>
 
           </button>
 
         </div>
+
       </section>
 
       {/* ABOUT SECTION */}
@@ -149,6 +149,7 @@ function IntroPage() {
           </div>
 
         </div>
+
       </section>
 
       {/* FINAL CTA */}
@@ -182,10 +183,9 @@ function IntroPage() {
               Join Our Community
             </span>
 
-            <ArrowRight
-              size={18}
-              className="group-hover:translate-x-1 transition"
-            />
+            <span className="group-hover:translate-x-1 transition">
+              →
+            </span>
 
           </button>
 
