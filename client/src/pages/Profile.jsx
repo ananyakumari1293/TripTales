@@ -438,6 +438,42 @@ function Profile({ trips = [] }) {
                     {trip.displayBudget}
 
                   </p>
+                  <div className="flex justify-end mb-4">
+
+  <button
+
+    onClick={async () => {
+
+      try {
+
+        await axios.put(
+
+          `https://triptales-1-pb97.onrender.com/api/trips/archive/${trip._id}`
+
+        );
+
+        window.location.reload();
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    }}
+
+    className="bg-white px-4 py-2 rounded-xl shadow-md"
+  >
+
+    {trip.isArchived
+
+      ? "Restore ♻️"
+
+      : "Archive 📦"}
+
+  </button>
+
+</div>
 
                   {/* VIEW BUTTON */}
                   <button
