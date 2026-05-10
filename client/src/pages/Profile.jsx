@@ -29,6 +29,21 @@ function Profile({ trips = [] }) {
   const [bio,
     setBio] =
     useState("");
+    const [editingTrip,
+  setEditingTrip] =
+  useState(null);
+
+const [editTitle,
+  setEditTitle] =
+  useState("");
+
+const [editType,
+  setEditType] =
+  useState("");
+
+const [editBudget,
+  setEditBudget] =
+  useState("");
 
   /* FETCH USER */
   useEffect(() => {
@@ -440,6 +455,42 @@ function Profile({ trips = [] }) {
                   </p>
                   <div className="flex justify-end mb-4">
 
+  
+
+</div>
+<div className="flex gap-3 mb-4">
+
+  {/* EDIT */}
+  <button
+
+    onClick={() => {
+
+      setEditingTrip(
+        trip
+      );
+
+      setEditTitle(
+        trip.title
+      );
+
+      setEditType(
+        trip.type
+      );
+
+      setEditBudget(
+        trip.displayBudget
+      );
+
+    }}
+
+    className="bg-black text-white px-4 py-2 rounded-xl"
+  >
+
+    Edit ✏️
+
+  </button>
+
+  {/* ARCHIVE */}
   <button
 
     onClick={async () => {
@@ -509,7 +560,136 @@ function Profile({ trips = [] }) {
 
       </div>
 
+    
+    {/* EDIT MODAL */}
+{editingTrip && (
+
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+    <div className="bg-white p-8 rounded-3xl w-[90%] max-w-lg space-y-5">
+
+      <h2 className="text-3xl font-bold">
+
+        Edit Trip ✨
+
+      </h2>
+
+      {/* TITLE */}
+      <input
+        type="text"
+
+        value={editTitle}
+
+        onChange={(e) =>
+          setEditTitle(
+            e.target.value
+          )
+        }
+
+        className="w-full p-4 rounded-2xl border outline-none"
+      />
+
+      {/* TYPE */}
+      <input
+        type="text"
+
+        value={editType}
+
+        onChange={(e) =>
+          setEditType(
+            e.target.value
+          )
+        }
+
+        className="w-full p-4 rounded-2xl border outline-none"
+      />
+
+      {/* BUDGET */}
+      <input
+        type="text"
+
+        value={editBudget}
+
+        onChange={(e) =>
+          setEditBudget(
+            e.target.value
+          )
+        }
+
+        className="w-full p-4 rounded-2xl border outline-none"
+      />
+
+      {/* BUTTONS */}
+      <div className="flex gap-4">
+
+        <button
+
+          onClick={async () => {
+
+            try {
+
+              await axios.put(
+
+                `https://triptales-1-pb97.onrender.com/api/trips/edit/${editingTrip._id}`,
+
+                {
+
+                  title:
+                    editTitle,
+
+                  type:
+                    editType,
+
+                  displayBudget:
+                    editBudget,
+
+                }
+
+              );
+
+              alert(
+                "Trip Updated ✨"
+              );
+
+              window.location.reload();
+
+            } catch (error) {
+
+              console.log(error);
+
+            }
+
+          }}
+
+          className="flex-1 bg-purple-600 text-white py-3 rounded-2xl"
+        >
+
+          Save
+
+        </button>
+
+        <button
+
+          onClick={() =>
+            setEditingTrip(
+              null
+            )
+          }
+
+          className="flex-1 bg-gray-200 py-3 rounded-2xl"
+        >
+
+          Cancel
+
+        </button>
+
+      </div>
+
     </div>
+
+  </div>
+
+)}
 
   );
 

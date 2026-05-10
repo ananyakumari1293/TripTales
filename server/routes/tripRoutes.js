@@ -123,6 +123,45 @@ router.put(
   }
 );
 router.put(
+  "/edit/:id",
+
+  async (req, res) => {
+
+    try {
+
+      const updatedTrip =
+        await Trip.findByIdAndUpdate(
+
+          req.params.id,
+
+          req.body,
+
+          {
+            new: true,
+          }
+
+        );
+
+      res.status(200).json(
+        updatedTrip
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+
+        message:
+          "Edit failed",
+
+      });
+
+    }
+
+  }
+);
+router.put(
   "/like/:id",
 
   async (req, res) => {
