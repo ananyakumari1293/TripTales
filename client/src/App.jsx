@@ -26,8 +26,11 @@ import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 
 import About from "./pages/About";
+
 import Profile from "./pages/Profile";
+
 import IntroPage from "./pages/IntroPage";
+
 function App() {
 
   const [trips, setTrips] =
@@ -35,24 +38,29 @@ function App() {
 
   useEffect(() => {
 
-    const fetchTrips = async () => {
+    const fetchTrips =
+      async () => {
 
-      try {
+        try {
 
-        const response =
-          await axios.get(
-            "https://triptales-1-pb97.onrender.com/api/trips"
+          const response =
+            await axios.get(
+
+              "https://triptales-1-pb97.onrender.com/api/trips"
+
+            );
+
+          setTrips(
+            response.data
           );
 
-        setTrips(response.data);
+        } catch (error) {
 
-      } catch (error) {
+          console.log(error);
 
-        console.log(error);
+        }
 
-      }
-
-    };
+      };
 
     fetchTrips();
 
@@ -64,87 +72,122 @@ function App() {
 
       <Routes>
 
-        {/* Login */}
+        {/* INTRO PAGE */}
         <Route
           path="/"
+          element={<IntroPage />}
+        />
+
+        {/* LOGIN */}
+        <Route
+          path="/login"
           element={<Login />}
         />
 
-        {/* Explore */}
+        {/* EXPLORE */}
         <Route
           path="/explore"
           element={
+
             <ProtectedRoute>
+
               <Explore trips={trips} />
+
             </ProtectedRoute>
+
           }
         />
 
-        {/* Itinerary */}
+        {/* ITINERARY */}
         <Route
           path="/itinerary/:id"
           element={
+
             <ProtectedRoute>
+
               <Itinerary trips={trips} />
+
             </ProtectedRoute>
+
           }
         />
 
-        {/* Create Post */}
+        {/* CREATE POST */}
         <Route
           path="/create-post"
           element={
+
             <ProtectedRoute>
+
               <CreatePost />
+
             </ProtectedRoute>
+
           }
         />
-        
 
-        {/* Settings */}
+        {/* SETTINGS */}
         <Route
           path="/settings"
           element={
+
             <ProtectedRoute>
+
               <Settings />
+
             </ProtectedRoute>
+
           }
         />
 
-        {/* Help */}
+        {/* HELP */}
         <Route
           path="/help"
           element={
+
             <ProtectedRoute>
+
               <Help />
+
             </ProtectedRoute>
+
           }
         />
 
-        {/* About */}
+        {/* ABOUT */}
         <Route
           path="/about"
           element={
+
             <ProtectedRoute>
+
               <About />
+
             </ProtectedRoute>
+
           }
         />
-        <Route path="/" element={<IntroPage />} />
+
+        {/* PROFILE */}
         <Route
-  path="/profile"
-  element={
-    <ProtectedRoute>
-      <Profile trips={trips} />
-    </ProtectedRoute>
-  }
-/>
+          path="/profile"
+          element={
+
+            <ProtectedRoute>
+
+              <Profile trips={trips} />
+
+            </ProtectedRoute>
+
+          }
+        />
 
       </Routes>
 
     </BrowserRouter>
 
   );
+
 }
 
 export default App;
