@@ -3,7 +3,7 @@
 ### A modern travel storytelling platform built for people who travel with emotions, memories, and experiences — not just itineraries.
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Playfair+Display&size=24&duration=3200&pause=1000&color=FFFFFF&center=true&vCenter=true&width=900&lines=Every+journey+has+a+story.;Discover+hidden+places+and+memories;Travel+beyond+tourist+guides;Built+for+dreamers,+explorers,+and+storytellers."/>
+  <img src="https://readme-typing-svg.herokuapp.com?font=Playfair+Display&size=24&duration=3200&pause=1000&color=2E8B8B&center=true&vCenter=true&width=900&lines=Every+journey+has+a+story.;Discover+hidden+places+and+memories;Travel+beyond+tourist+guides;Built+for+dreamers,+explorers,+and+storytellers."/>
 </p>
 
 ---
